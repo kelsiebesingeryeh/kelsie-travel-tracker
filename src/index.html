@@ -2,10 +2,26 @@
 <html lang="en-US">
   <head>
     <title>Travel Tracker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <main>
-      <section>
+      <nav class="nav-bar">
+        <div class="nav-left">
+          <ul>
+            <li><a class="home" href="#home">Travel Tracker</a></li>
+          </ul>
+        </div>
+        <div class="nav-right">
+          <ul>
+            <li><a href="#my-trips">My Trips</a></li>
+            <li><a href="#upcoming-trips">Upcoming Trips</a></li>
+            <li><a href="#pending-trips">Pending Trips</a></li>
+            <li><a href="#past-trips">Past Trips</a></li>
+          </ul>
+        </div>
+      </nav>
+      <section class="login-page hidden">
         <h1>Login:</h1>
           <div class="login-container">
             <form id="login-form" class="login-form">
@@ -17,11 +33,22 @@
             </form>
           </div>
       </section>
+      <section class="user-view">
+        <h1>Plan your next trip here!</h1>
+          <label for="destinations">Choose a Destination</label>
+          <select name="names-list" class="names-list" id="names"></select>
+          <label for="travel-start-date">Choose a start date</label>
+          <input type="date" class="date-picker" id="date" value="2019-06-15" min="2019-06-15" max="2019-09-15">
+          <label for="duration">Duration</label>
+          <input type="text" name="duration" id="duration" class="duration">
+          <label for="num-travelers">Number of Travelers</label>
+          <input type="text" name="travelers" id="travelers" class="travelers">
+          <input type="submit" value="Book" id="book-travel-submit" class="book-travel-button">
+      <h2>All Trips:</h2>
+      <article class="travel-card-container">
+      </article>
+      </section>
     </main>
-    <h1>Webpack Starter Kit</h1>
-
-    <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   </body>
 </html>
