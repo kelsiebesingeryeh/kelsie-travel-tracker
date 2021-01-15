@@ -1,9 +1,72 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
-;
+@import 'variables';
 
 body {
-  background: $primary-background;
+  background: $off-white;
+  font-family: $montserrat-font;
+}
+
+ul {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: $light-grey;
+  font-family: $montserrat-font;
+}
+
+li {
+  float: right;
+   &:hover {
+     background-color: $hot-pink;
+   }
+}
+
+.nav-left {
+  float: left;
+}
+
+li {
+    a {
+      display: block;
+      color: $dark-green;
+      font-weight: bold;
+      text-align: center;
+      padding: 0.875rem 1rem;
+      text-decoration: none;
+    }
+}
+
+h1 {
+  font-family: $montserrat-font;
+  font-weight: bold;
+  color: $hot-pink;
+  font-size: 2rem;
+}
+
+.book-trip-form {
+  display: flex;
+  justify-content: space-around;
+
+}
+.label-names {
+  font-size: .65rem;
+  font-weight: bold;
+  display: block;
+}
+
+.book-travel-button {
+  background-color: $hot-pink;
+  border-radius: 5px;
+  color: $off-white;
+  font-family: $montserrat-font;
+  width: 5.5rem;
+  border: none;
+}
+
+.user-view {
+  margin-top: 5%;
 }
 
 .hidden {
