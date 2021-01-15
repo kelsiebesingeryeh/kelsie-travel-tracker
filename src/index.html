@@ -3,6 +3,8 @@
   <head>
     <title>Travel Tracker</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Andika&family=Hind+Vadodara&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <main>
@@ -35,17 +37,27 @@
       </section>
       <section class="user-view">
         <h1>Plan your next trip here!</h1>
-          <label for="destinations">Choose a Destination</label>
-          <select name="names-list" class="names-list" id="names"></select>
-          <label for="travel-start-date">Choose a start date</label>
-          <input type="date" class="date-picker" id="date" value="2019-06-15" min="2019-06-15" max="2019-09-15">
-          <label for="duration">Duration</label>
-          <input type="text" name="duration" id="duration" class="duration">
-          <label for="num-travelers">Number of Travelers</label>
-          <input type="text" name="travelers" id="travelers" class="travelers">
+        <form class="book-trip-form">
+          <span class="label-styling">
+            <label for="destinations" class="label-names">Choose a Destination</label>
+            <select name="names-list" class="names-list" id="names"></select>
+          </span>
+          <span class="label-styling">
+            <label for="travel-start-date" class="label-names">Choose a start date</label>
+            <input type="date" class="date-picker" id="date" value="2019-06-15" min="2019-06-15" max="2019-09-15">
+          </span>
+          <span class="label-styling">
+            <label for="duration" class="label-names">Duration</label>
+            <input type="text" name="duration" id="duration" class="duration">
+          </span>
+          <span class="label-styling">
+            <label for="num-travelers" class="label-names">Number of Travelers</label>
+            <input type="text" name="travelers" id="travelers" class="travelers">
+          </span>
           <input type="submit" value="Book" id="book-travel-submit" class="book-travel-button">
-      <h2>All Trips:</h2>
-      <article class="travel-card-container">
+        </form>
+        <article class="travel-card-container">
+        <h2></h2>
       </article>
       </section>
     </main>
