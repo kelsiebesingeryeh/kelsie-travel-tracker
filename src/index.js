@@ -5,7 +5,6 @@
 import './css/base.scss';
 import Trip from './trip';
 import Traveler from './traveler';
-import Destination from './destination';
 import ApiCall from './apiCalls';
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
@@ -23,7 +22,7 @@ let travelerApi,
   userTrips,
   travelerDestinations;
 let allTrips = [];
-let allDestinations = [];
+// let allDestinations = [];
 
 window.onload = getAllData();
 
@@ -43,10 +42,6 @@ function onLoad() {
     .then(data => {
         let travelerInfo = data[0];
         let destinationInfo = data[1];
-        destinationInfo.forEach(destination => {
-            travelerDestinations = new Destination(destination)
-            allDestinations.push(travelerDestinations)
-        })
         let tripInfo = data[2];
         tripInfo.forEach(trip => {
             userTrip = new Trip(trip)                                                                                                          

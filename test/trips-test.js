@@ -84,7 +84,7 @@ describe("Trip", () => {
         );
     });
 
-    it("Should have a property of suggested activities with a default value", () => {
+    it("Should calculate an estimated trip cost", () => {
         expect(trip1.calculateEstimatedTripCost()).to.eql(3355);
     });
 
