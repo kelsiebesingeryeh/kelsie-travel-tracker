@@ -8,6 +8,9 @@ class Traveler {
         // this.username = username;
         // this.password = password;
     }
+
+    // this.trips is going to be an array of all the travelers trips
+    // going to create a new instance of each trip with class traveler
 }
 
 export default Traveler;

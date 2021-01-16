@@ -26,7 +26,4 @@ describe("Traveler", () => {
    it("Should have a unique traveler id", () => {
      expect(traveler1.id).to.eql(5);
    });
-
-   
-
 });
