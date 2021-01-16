@@ -1,11 +1,17 @@
-export let testUser = {
+export let testUser = [
+  {
   id: 5,
   name: "Tiffy Grout",
   travelerType: "thrill-seeker",
-};
+}, 
+{
+  "id": 15,
+  "name": "Emeline Winslet",
+  "travelerType": "history buff"
+}
+]
 
-export let testTrips = [
-  {
+export let testTrips = [{
     id: 91,
     userID: 5,
     destinationID: 5,
@@ -45,16 +51,44 @@ export let testTrips = [
     status: "approved",
     suggestedActivities: [],
   },
+  {
+    id: 90,
+    userID: 15,
+    destinationID: 38,
+    travelers: 5,
+    date: "2020/03/04",
+    duration: 7,
+    status: "approved",
+    suggestedActivities: [],
+  },
+  {
+    id: 120,
+    userID: 15,
+    destinationID: 33,
+    travelers: 1,
+    date: "2020/11/21",
+    duration: 10,
+    status: "approved",
+    suggestedActivities: [],
+  },
+  {
+    id: 167,
+    userID: 15,
+    destinationID: 42,
+    travelers: 3,
+    date: "2019/08/10",
+    duration: 16,
+    status: "approved",
+    suggestedActivities: []
+  },
 ];
 
-export let testDestinations = [
-  {
+export let testDestinations = [{
     id: 5,
     destination: "Madrid, Spain",
     estimatedLodgingCostPerDay: 150,
     estimatedFlightCostPerPerson: 650,
-    image:
-      "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    image: "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     alt: "city with clear skys and a road in the day time",
   },
   {
@@ -62,8 +96,7 @@ export let testDestinations = [
     destination: "Anchorage, Alaska",
     estimatedLodgingCostPerDay: 200,
     estimatedFlightCostPerPerson: 100,
-    image:
-      "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+    image: "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
     alt: "man riding on kayak surrounded by mountains",
   },
   {
@@ -71,8 +104,7 @@ export let testDestinations = [
     destination: "Dar es Salaam, Tanzania",
     estimatedLodgingCostPerDay: 1200,
     estimatedFlightCostPerPerson: 100,
-    image:
-      "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
     alt: "aerial photography of high-rise building",
   },
 
@@ -81,8 +113,7 @@ export let testDestinations = [
     destination: "Bangkok, Thailand",
     estimatedLodgingCostPerDay: 35,
     estimatedFlightCostPerPerson: 988,
-    image:
-      "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
+    image: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
     alt: "ornate buildings with a garden during the day",
   },
 ];

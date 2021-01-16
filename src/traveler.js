@@ -1,9 +1,9 @@
 import Trip from './trip';
 
 class Traveler {
-    constructor(id, name) {
-        this.id = id;
-        this.name = name;
+    constructor(travelerData) {
+        this.id = travelerData.id;
+        this.name = travelerData.name;
         this.trips = [];
     }
 
@@ -22,49 +22,42 @@ class Traveler {
     // login guest?
 
 
-    getAUserID() {
-        return this.id
-    }
-
     getAllTravelersTrips(tripData, destinationData) {
-        this.trips = tripData.map(trip => new Trip(trip, destinationData));
-        return this.trips
+       this.trips = tripData.reduce((total, trip) => {
+          destinationData.forEach((destination) => {
+            if (
+              this.id === trip.userID &&
+              trip.destinationID === destination.id
+            ) {
+              total.push(new Trip(trip, destination));
+            }
+          });
+          return total;
+        }, [])
+        return this.trips;
     }
 
-    sortTrips() {
+
+    // sortTrips() {
     
-    }
+    // }
 
-   calculateTotalSpent() {
-    let totalLodging;
-    let totalFlight;
-    return tripData.reduce((total, value) => {
-      destinationData.forEach((place) => {
-        if (value.destinationID === place.id) {
-          totalLodging =
-            place.estimatedLodgingCostPerDay * value.duration * value.travelers;
-          totalFlight = place.estimatedFlightCostPerPerson * value.travelers;
-        }
-      });
-      total += totalLodging + totalFlight;
-      return total;
-    }, 0);
-  }
+   calculateTotalSpent(tripData, destinationData) {
+     let allTrips = this.getAllTravelersTrips(tripData, destinationData);
+     let totalLodging;
+     let totalFlight;
+
+     return allTrips.reduce((total, value) => {
+         totalLodging = (value.destination.estimatedLodgingCostPerDay * value.duration) * value.travelers;
+         totalFlight = (value.destination.estimatedFlightCostPerPerson * value.travelers);
+         console.log(totalLodging)
+         console.log(totalFlight)
+         total += totalLodging + totalFlight
+         return total;
+     }, 0)
+   }
+
 }
-
-//  userTrips = allTrips.filter((traveler) => traveler.userID === Number(userID));
-//   getTravelersDestinations() 
-
-// function getTravelersDestinations() {
-//   return allDestinations.reduce((total, destination) => {
-//     userTrips.forEach((trip) => {
-//       if (destination.id === trip.destinationID) {
-//         total.push(destination);
-//       }
-//     });
-//     return total;
-//   }, []);
- //move function into trips class
 
 
 
