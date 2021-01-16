@@ -61,4 +61,4 @@ export default ApiCall;
 // need to figure out promise.all - how to run this
 // figure out if apiCalls should be an object or a class
 
-// `https://fe-apps.herokuapp.com/api/v1/travel-tracker/data/travelers/travelers/${id}`;
+// ;
