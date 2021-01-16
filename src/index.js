@@ -49,9 +49,9 @@ function onLoad() {
         })
         let tripInfo = data[2];
         tripInfo.forEach(trip => {
-            userTrip = new Trip(trip)
+            userTrip = new Trip(trip)                                                                                                          
             allTrips.push(userTrip)
-        })
+        })  
         buildPage(travelerInfo, destinationInfo, tripInfo);
     })
     .catch(error => console.log(error))
@@ -66,35 +66,20 @@ function createTravelerProfile(travelers, destinations, trips) {
   let userID = Math.floor(Math.random() * 49) + 1;
   let newTraveler = travelers.find((traveler) => traveler.id === Number(userID));
   traveler = new Traveler(userID, newTraveler.name);
-  userTrips = allTrips.filter((traveler) => traveler.userID === Number(userID));
-  getTravelersDestinations()
 }
 
-function getTravelersDestinations() {
-  return allDestinations.reduce((total, destination) => {
-    userTrips.forEach((trip) => {
-      if (destination.id === trip.destinationID) {
-        total.push(destination);
-      }
-    });
-    return total;
-  }, []);
-}
+
 
 function displayTrips(tripsList) {
-    console.log(tripsList)
     tripsArea.innerHTML = '';
     tripsList.forEach(trip => {
-        console.log(trip)
-        let tripsHTML = `<div id='${trip.id}-card' class='card'>
-        <header id=${trip.id}-header' class='card-header>
+        let tripsHTML = `
         <div class='info-card'>
             <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
-            <p id="${trip.duration}-duration" class="trip-duration">Trip Duration:${trip.duration}</p>
+            <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
             <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
             <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
         </div>
-    </div>
     `;
     tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
     })
