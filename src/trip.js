@@ -12,7 +12,6 @@ class Trip {
   }
 
   calculateEstimatedTripCost() {
-    console.log(this.date);
     let totalLodging =
       this.destination.estimatedLodgingCostPerDay *
       this.duration *

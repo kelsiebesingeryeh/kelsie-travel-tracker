@@ -34,7 +34,7 @@ describe("Trip", () => {
     });
 
     it("Should have a travel date", () => {
-        expect(trip1.date).to.eql("2020/04/29");
+        expect(trip1.date).to.eql("2019/04/29");
     });
 
     it("Should have a travel duration", () => {

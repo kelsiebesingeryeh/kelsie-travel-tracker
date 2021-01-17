@@ -39,7 +39,7 @@ describe("Traveler", () => {
         userID: 5,
         destinationID: 5,
         travelers: 1,
-        date: "2020/04/29",
+        date: "2019/04/29",
         duration: 16,
         status: "pending",
         suggestedActivities: [],
@@ -114,7 +114,7 @@ describe("Traveler", () => {
   });
 
   it("Should calculate total amount spent on trips this year", () => {
-    expect(traveler1.calculateTotalSpent()).to.eql(24618);
+    expect(traveler1.calculateTotalSpent("2020")).to.eql(23724.8);
   });
 
   it("Should return all pending trips", () => {
@@ -124,7 +124,7 @@ describe("Traveler", () => {
         userID: 5,
         destinationID: 5,
         travelers: 1,
-        date: "2020/04/29",
+        date: "2019/04/29",
         duration: 16,
         status: "pending",
         suggestedActivities: [],

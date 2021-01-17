@@ -16,7 +16,7 @@ export let testTrips = [{
     userID: 5,
     destinationID: 5,
     travelers: 1,
-    date: "2020/04/29",
+    date: "2019/04/29",
     duration: 16,
     status: "pending",
     suggestedActivities: [],
