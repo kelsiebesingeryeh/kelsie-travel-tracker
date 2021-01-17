@@ -83,11 +83,23 @@ h1 {
   display: flex;
   flex-direction: column;
   height: 20rem;
-  width: 60%;
-  justify-content: flex-end;
+  width: 70%;
+  justify-content: center;
   border: 1px solid$slate-grey;
   border-radius: 5px;
   box-shadow: $shadow;
+}
+
+.image-styling {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.trip-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 25%;
 }
 
 
