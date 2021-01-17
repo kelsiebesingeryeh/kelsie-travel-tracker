@@ -42,7 +42,7 @@ describe("Trip", () => {
     });
 
     it("Should have a travel status", () => {
-        expect(trip1.status).to.eql("approved");
+        expect(trip1.status).to.eql("pending");
     });
 
     it("Should have a property of suggested activities with a default value", () => {
