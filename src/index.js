@@ -1,15 +1,8 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 import Trip from './trip';
 import Traveler from './traveler';
 import ApiCall from './apiCalls';
 import domUpdates from './domUpdates';
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 
 let tripsArea = document.querySelector('.travel-card-container');
 let yearCost = document.querySelector('.year-cost')
