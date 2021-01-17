@@ -114,6 +114,7 @@ describe("Traveler", () => {
   });
 
   it("Should calculate total amount spent on trips this year", () => {
+    console.log(traveler1)
     expect(traveler1.calculateTotalSpent("2020")).to.eql(13310);
   });
 

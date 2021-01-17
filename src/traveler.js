@@ -38,12 +38,8 @@ class Traveler {
     let agentFee;
     let totalTripCost = this.trips.reduce((total, value) => {
       if (value.date.includes(year)) {
-        totalLodging =
-          value.destination.estimatedLodgingCostPerDay *
-          value.duration *
-          value.travelers;
-        totalFlight =
-          value.destination.estimatedFlightCostPerPerson * value.travelers;
+        totalLodging = value.destination.estimatedLodgingCostPerDay * value.duration
+        totalFlight = value.destination.estimatedFlightCostPerPerson;
         total += totalLodging + totalFlight;
       }
       return total;

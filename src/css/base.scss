@@ -45,6 +45,10 @@ h1 {
   font-size: 2rem;
 }
 
+.year-cost {
+  margin-top: 5%;
+}
+
 .book-trip-form {
   display: flex;
   justify-content: space-around;
@@ -82,12 +86,24 @@ h1 {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 20rem;
-  width: 60%;
-  justify-content: flex-end;
+  width: 70%;
+  justify-content: center;
   border: 1px solid$slate-grey;
   border-radius: 5px;
   box-shadow: $shadow;
+  text-align: center;
+}
+
+.image-styling {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.trip-image {
+  width: 100%;
+  height: auto;
+  margin-bottom: 25%;
 }
 
 
