@@ -74,8 +74,10 @@ class Traveler {
   getPastTrips() {
     return this.trips.reduce((total, value) => {
       let today = new Date();
-      let startDate = new Date(value.date);
-      if (startDate < today) {
+      let endDate = new Date(value.date);
+      endDate.setDate(endDate.getDate() + value.duration)
+      if (endDate < today) {
+          console.log(endDate)
         total.push(value);
       }
       return total;

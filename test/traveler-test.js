@@ -58,7 +58,7 @@ describe("Traveler", () => {
         userID: 5,
         destinationID: 35,
         travelers: 2,
-        date: "2020/01/16",
+        date: "2021/01/16",
         duration: 20,
         status: "approved",
         suggestedActivities: [],
@@ -114,7 +114,7 @@ describe("Traveler", () => {
   });
 
   it("Should calculate total amount spent on trips this year", () => {
-    expect(traveler1.calculateTotalSpent("2020")).to.eql(22330);
+    expect(traveler1.calculateTotalSpent("2020")).to.eql(13310);
   });
 
   it("Should return all pending trips", () => {
@@ -142,7 +142,27 @@ describe("Traveler", () => {
   });
 
   it("Should return all current trips", () => {
-    expect(traveler1.getCurrentTrips()).to.eql([]);
+    expect(traveler1.getCurrentTrips()).to.eql([
+      {
+        id: 103,
+        userID: 5,
+        destinationID: 35,
+        travelers: 2,
+        date: "2021/01/16",
+        duration: 20,
+        status: "approved",
+        suggestedActivities: [],
+        destination: {
+          alt: "man riding on kayak surrounded by mountains",
+          destination: "Anchorage, Alaska",
+          estimatedFlightCostPerPerson: 100,
+          estimatedLodgingCostPerDay: 200,
+          id: 35,
+          image:
+            "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+        },
+      },
+    ]);
   });
 
   it("Should return all past trips", () => {
@@ -164,25 +184,6 @@ describe("Traveler", () => {
           id: 5,
           image:
             "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-        },
-      },
-      {
-        id: 103,
-        userID: 5,
-        destinationID: 35,
-        travelers: 2,
-        date: "2020/01/16",
-        duration: 20,
-        status: "approved",
-        suggestedActivities: [],
-        destination: {
-          alt: "man riding on kayak surrounded by mountains",
-          destination: "Anchorage, Alaska",
-          estimatedFlightCostPerPerson: 100,
-          estimatedLodgingCostPerDay: 200,
-          id: 35,
-          image:
-            "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
         },
       },
       {
