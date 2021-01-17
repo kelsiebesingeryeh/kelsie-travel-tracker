@@ -17,9 +17,9 @@
         <div class="nav-right">
           <ul>
             <li><a href="#my-trips">My Trips</a></li>
-            <li><a href="#upcoming-trips">Upcoming Trips</a></li>
-            <li><a href="#pending-trips">Pending Trips</a></li>
-            <li><a href="#past-trips">Past Trips</a></li>
+            <li><a href="#upcoming-trips" class="upcoming-trips">Upcoming Trips</a></li>
+            <li><a href="#pending-trips" class="pending-trips">Pending Trips</a></li>
+            <li><a href="#past-trips" class="past-trips">Past Trips</a></li>
           </ul>
         </div>
       </nav>
@@ -57,9 +57,18 @@
           <input type="submit" value="Book" id="book-travel-submit" class="book-travel-button">
         </form>
         <h2 class="year-cost">Your 2020 yearly trip cost is:</h2>
-        <h2>All Trips</h2>
+        <h2 class="all-trips">All Trips</h2>
         <article class="travel-card-container">
-      </article>
+        </article>
+      </section>
+      <section class="pending-trips-area">
+        <h2 class="pending-trips-text"></h2>
+      </section>
+      <section class="upcoming-trips-area">
+        <h2 class="upcoming-trips-text"></h2>
+      </section>
+      <section class="past-trips-area">
+        <h2 class="past-trips-text"></h2>
       </section>
     </main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
