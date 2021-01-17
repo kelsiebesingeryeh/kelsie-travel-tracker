@@ -19,7 +19,7 @@ export let testTrips = [
     travelers: 1,
     date: "2019/04/29",
     duration: 16,
-    status: "pending",
+    status: "approved",
     suggestedActivities: [],
   },
   {
@@ -49,7 +49,7 @@ export let testTrips = [
     travelers: 1,
     date: "2021/02/25",
     duration: 8,
-    status: "approved",
+    status: "pending",
     suggestedActivities: [],
   },
   {

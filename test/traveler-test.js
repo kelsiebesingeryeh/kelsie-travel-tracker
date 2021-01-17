@@ -41,7 +41,7 @@ describe("Traveler", () => {
         travelers: 1,
         date: "2019/04/29",
         duration: 16,
-        status: "pending",
+        status: "approved",
         suggestedActivities: [],
         destination: {
           alt: "city with clear skys and a road in the day time",
@@ -98,7 +98,7 @@ describe("Traveler", () => {
         travelers: 1,
         date: "2021/02/25",
         duration: 8,
-        status: "approved",
+        status: "pending",
         suggestedActivities: [],
         destination: {
           alt: "ornate buildings with a garden during the day",
@@ -120,24 +120,24 @@ describe("Traveler", () => {
   it("Should return all pending trips", () => {
     expect(traveler1.getPendingTrips()).to.eql([
       {
-        id: 91,
+        id: 196,
         userID: 5,
-        destinationID: 5,
+        destinationID: 16,
         travelers: 1,
-        date: "2019/04/29",
-        duration: 16,
+        date: "2021/02/25",
+        duration: 8,
         status: "pending",
         suggestedActivities: [],
         destination: {
-          alt: "city with clear skys and a road in the day time",
-          destination: "Madrid, Spain",
-          estimatedFlightCostPerPerson: 650,
-          estimatedLodgingCostPerDay: 150,
-          id: 5,
+          alt: "ornate buildings with a garden during the day",
+          destination: "Bangkok, Thailand",
+          estimatedFlightCostPerPerson: 988,
+          estimatedLodgingCostPerDay: 35,
+          id: 16,
           image:
-            "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+            "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
         },
-      },
+      }
     ]);
   });
 
@@ -174,7 +174,7 @@ describe("Traveler", () => {
         travelers: 1,
         date: "2019/04/29",
         duration: 16,
-        status: "pending",
+        status: "approved",
         suggestedActivities: [],
         destination: {
           alt: "city with clear skys and a road in the day time",
@@ -217,7 +217,7 @@ describe("Traveler", () => {
         travelers: 1,
         date: "2021/02/25",
         duration: 8,
-        status: "approved",
+        status: "pending",
         suggestedActivities: [],
         destination: {
           alt: "ornate buildings with a garden during the day",
