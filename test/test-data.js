@@ -11,7 +11,8 @@ export let testUser = [
 }
 ]
 
-export let testTrips = [{
+export let testTrips = [
+  {
     id: 91,
     userID: 5,
     destinationID: 5,
@@ -26,7 +27,7 @@ export let testTrips = [{
     userID: 5,
     destinationID: 35,
     travelers: 2,
-    date: "2020/10/19",
+    date: "2020/1/16",
     duration: 20,
     status: "approved",
     suggestedActivities: [],
@@ -46,7 +47,7 @@ export let testTrips = [{
     userID: 5,
     destinationID: 16,
     travelers: 1,
-    date: "2020/09/25",
+    date: "2021/02/25",
     duration: 8,
     status: "approved",
     suggestedActivities: [],
@@ -79,7 +80,7 @@ export let testTrips = [{
     date: "2019/08/10",
     duration: 16,
     status: "approved",
-    suggestedActivities: []
+    suggestedActivities: [],
   },
 ];
 
