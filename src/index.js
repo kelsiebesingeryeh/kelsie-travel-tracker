@@ -21,8 +21,6 @@ let travelerApi,
   userTrip,
   userTrips,
   travelerDestinations;
-let allTrips = [];
-// let allDestinations = [];
 
 window.onload = getAllData();
 
@@ -43,24 +41,26 @@ function onLoad() {
         let travelerInfo = data[0];
         let destinationInfo = data[1];
         let tripInfo = data[2];
-        tripInfo.forEach(trip => {
-            userTrip = new Trip(trip)                                                                                                          
-            allTrips.push(userTrip)
-        })  
-        buildPage(travelerInfo, destinationInfo, tripInfo);
+        let userID = Math.floor(Math.random() * 49) + 1;
+        let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
+        traveler = new Traveler(newTraveler, tripInfo, destinationInfo)
+        // buildPage(travelerInfo, destinationInfo, tripInfo);
     })
     .catch(error => console.log(error))
 }
 
 function buildPage(travelers, destinations, trips) {
-    createTravelerProfile(travelers, destinations, trips);
+    // createTravelerProfile(travelers, destinations, trips);
     displayTrips(userTrips)
+    displayYearlyTripCost(userTrips);
 }
 
 function createTravelerProfile(travelers, destinations, trips) {
   let userID = Math.floor(Math.random() * 49) + 1;
   let newTraveler = travelers.find((traveler) => traveler.id === Number(userID));
-  traveler = new Traveler(userID, newTraveler.name);
+//   traveler = new Traveler(userID, newTraveler.name);
+  
+  console.log(traveler);
 }
 
 
@@ -78,4 +78,14 @@ function displayTrips(tripsList) {
     `;
     tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
     })
+
+    function displayYearlyTripCost(tripsList) {
+
+    }
 }
+
+
+ // tripInfo.forEach(trip => {
+        //     userTrip = new Trip(trip, destintation)                                                                                                          
+        //     allTrips.push(userTrip)
+        // })  
