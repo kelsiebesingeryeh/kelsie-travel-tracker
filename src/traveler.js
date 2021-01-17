@@ -11,7 +11,6 @@ class Traveler {
 
   //METHODS TO THINK ABOUT
   // - sortTrips - we need to sort them by date?
-  // get present trips
   // validate password
   // validate login
   // chose a user?
@@ -58,17 +57,16 @@ class Traveler {
   }
 
   getCurrentTrips() {
-    this.trips.reduce((total, value) => {
+    return this.trips.reduce((total, value) => {
+      let today = new Date();
       let startDate = new Date(value.date);
-      startDate.setDate();
-      // let endDate = startDate.setDate(startDate.getDate() - value.duration);
-      // console.log(endDate);
+      let endDate = new Date(value.date);
+      endDate.setDate(endDate.getDate() + value.duration);
+      if (startDate < today && endDate > today) {
+        total.push(value);
+      }
       return total;
     }, []);
-    // startdate of the trip, then you need to add the trip duration in order to get the start and end date - then you have to compare if your
-    // current date falls inbetween either one of those dates
-    // calculate date range - getting the start date of the trip and calculating the end date based on duration, then
-    // does the current date fall inbetween the duration? if it does show the current trips
   }
 
   getPastTrips() {
@@ -77,7 +75,6 @@ class Traveler {
       let endDate = new Date(value.date);
       endDate.setDate(endDate.getDate() + value.duration)
       if (endDate < today) {
-          console.log(endDate)
         total.push(value);
       }
       return total;
