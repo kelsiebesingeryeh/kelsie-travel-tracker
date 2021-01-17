@@ -11,6 +11,7 @@ import ApiCall from './apiCalls';
 import './images/turing-logo.png'
 
 let tripsArea = document.querySelector('.travel-card-container');
+let yearCost = document.querySelector('.year-cost')
 
 let travelerApi,
   destinationApi,
@@ -49,14 +50,13 @@ function onLoad() {
 function buildPage(travelerInfo, tripInfo, destinationInfo) {
   createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
   displayTrips(traveler);
-//   displayYearlyTripCost(userTrips);
+  yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
 }
 
 function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
  let userID = Math.floor(Math.random() * 49) + 1;
  let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
  traveler = new Traveler(newTraveler, tripInfo, destinationInfo);
- console.log(traveler);
 }
 
 function displayTrips(tripsList) {
@@ -67,7 +67,7 @@ function displayTrips(tripsList) {
             <div class="image-styling">
                 <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
             </div>
-            <p id="${trip.destination.destination}-date" class="trip-date">Trip Date: ${trip.date}</p>
+            <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
             <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
             <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
             <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
@@ -76,10 +76,6 @@ function displayTrips(tripsList) {
     `;
     tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
     })
-
-    function displayYearlyTripCost(tripsList) {
-
-    }
 }
 
 

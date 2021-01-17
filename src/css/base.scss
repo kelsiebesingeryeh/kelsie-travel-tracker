@@ -82,12 +82,12 @@ h1 {
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 20rem;
   width: 70%;
   justify-content: center;
   border: 1px solid$slate-grey;
   border-radius: 5px;
   box-shadow: $shadow;
+  text-align: center;
 }
 
 .image-styling {
