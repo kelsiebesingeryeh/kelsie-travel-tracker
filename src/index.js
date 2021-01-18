@@ -31,6 +31,9 @@ let durationInput = document.querySelector('.duration');
 let travelersInput = document.querySelector('.travelers');
 let startDate = document.querySelector(".date-picker");
 let estimatedTripCost = document.querySelector(".estimated-trip-cost");
+let loginSubmitButton = document.querySelector(".submit-button");
+let userView = document.querySelector(".user-view");
+let loginPage = document.querySelector(".login-page");
 
 let travelerApi;
 let destinationApi;
@@ -42,12 +45,18 @@ let destinationInfo;
 let trip;
 
 window.onload = getAllData();
+
 pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
 bookTravelButton.addEventListener("click", () => {
     displayEstimatedCosts(event);
+});
+loginSubmitButton.addEventListener('click', () => {
+    userView.classList.remove("hidden");
+    loginPage.classList.add("hidden");
+    getAllData();
 });
 // homeButton.addEventListener("click", returnHome);
 

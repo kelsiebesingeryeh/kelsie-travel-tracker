@@ -45,6 +45,42 @@ h1 {
   font-size: 2rem;
 }
 
+.login-text {
+  text-align: center;
+  margin-top: 15%;
+}
+
+.login-container {
+  margin: auto;
+}
+
+.login-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.login-form-field {
+  width: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 8px 0;
+  padding: 12px 20px;
+  border-radius: 10px;
+}
+
+.submit-button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 14px 20px;
+  background-color: #d90368;
+  color: #F8F9FA;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  border: none;
+}
+
 .year-cost {
   margin-top: 5%;
 }
