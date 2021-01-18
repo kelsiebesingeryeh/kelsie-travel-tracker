@@ -43,14 +43,15 @@ let hamburgerMenuContent = document.querySelector(".hamburger-content");
 let travelerApi;
 let destinationApi;
 let tripApi;
-let traveler;
-let tripInfo;
 let destinationInfo;
+let travelerInfo;
+let tripInfo;
+let singleInfo;
+let traveler;
 let trip;
 let singleTraveler;
-let singleInfo;
 let newTrip;
-let uniqueID;
+const baseURL = 'http://localhost:3001/api/v1';
 
 window.onload = getAllData();
 
@@ -60,8 +61,8 @@ pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
 bookTravelButton.addEventListener("click", () => {
     displayEstimatedCosts(event);
-    makeNewTrip();
-    //submitTripRequest();
+    //makeNewTrip()
+    submitTripRequest();
 });
 loginSubmitButton.addEventListener('click', () => {
     show(userView);
@@ -69,6 +70,10 @@ loginSubmitButton.addEventListener('click', () => {
     hide(loginPage);
     show(hamburgerMenu);
     getAllData();
+    //userName so you can get the digit
+    //function that gets the numbers from the userName input - parse through the string to get the digits of the number
+    // as you map through the string backwards, looking for numbers - once you have that
+    // callgetAllData - pass the ID into that function
 });
 
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
@@ -76,120 +81,110 @@ hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
 function toggleHamburgerMenuDropdown() {
     hamburgerMenuContent.classList.toggle('hidden');
 }
-            
-            // homeButton.addEventListener("click", returnHome);
-            
-            function getAllData() {
-                travelerApi = new ApiCall('http://localhost:3001/api/v1/travelers', 'travelers');
-                destinationApi = new ApiCall("http://localhost:3001/api/v1/destinations", 'destinations');
-                tripApi = new ApiCall("http://localhost:3001/api/v1/trips", 'trips');
-                singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/1`);
-                onLoad();
-            }
-            
-            function onLoad() {
-                let travelerData = travelerApi.getRequest();
-                let destinationData = destinationApi.getRequest();
-                let tripData = tripApi.getRequest();
-                let singleData = singleTraveler.getRequest();
-                // console.log(singleData)
-                
-                return Promise.all([travelerData, destinationData, tripData, singleData])
-                .then(data => {
-                    let travelerInfo = data[0][20];
-                    destinationInfo = data[1];
-                    tripInfo = data[2];
-                    singleInfo = data[3];
-                    buildPage(travelerInfo, tripInfo, destinationInfo, singleData);
-                    fillDropdown();
-                })
-                .catch(error => console.log(error))
-            }
-            
-            function fillDropdown() {
-                let sortedDestinations = destinationInfo.sort((a, b) => {
-                    if (a.destination < b.destination) {
-                        return -1
-                    }
-                })
-                sortedDestinations.forEach((destination) => {
-                    let opt = document.createElement("option");
-                    opt.innerHTML = destination.destination;
-                    opt.value = destination.destination;
-                    destinationsList.appendChild(opt);
-                });
-            }
-            
-            function buildPage(travelerInfo, tripInfo, destinationInfo) {
-                createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
-                displayTrips(traveler);
-                yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
-            }
-            
-            function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
-                // let userID = Math.floor(Math.random() * 49) + 1;
-                // let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
-                traveler = new Traveler(travelerInfo, tripInfo, destinationInfo);
-                //console.log(tripInfo);
-                getNewID();
-            }
+
+// homeButton.addEventListener("click", returnHome);
+
+function getAllData(id = 21) {
+    travelerApi = new ApiCall(`${baseURL}/travelers`, "travelers");
+    destinationApi = new ApiCall(`${baseURL}/destinations`, 'destinations');
+    tripApi = new ApiCall(`${baseURL}/trips`, "trips");
+    singleTraveler = new ApiCall(`${baseURL}/travelers/${id}`);
+    onLoad(id);
+}
+
+function onLoad(id) {
+    let travelerData = travelerApi.getRequest();
+    let destinationData = destinationApi.getRequest();
+    let tripData = tripApi.getRequest();
+    let singleData = singleTraveler.getSingleRequest(id);
+    
+    return Promise.all([travelerData, destinationData, tripData, singleData])
+    .then(data => {
+        travelerInfo = data[0];
+        destinationInfo = data[1];
+        tripInfo = data[2];
+        singleInfo = data[3];
+        buildPage(singleInfo, tripInfo, destinationInfo);
+        fillDropdown();
+        })
+        .catch(error => console.log(error))
+}
+
+function fillDropdown() {
+    let sortedDestinations = destinationInfo.sort((a, b) => {
+        if (a.destination < b.destination) {
+            return -1
+        }
+    })
+    sortedDestinations.forEach((destination) => {
+        let opt = document.createElement("option");
+        opt.innerHTML = destination.destination;
+        opt.value = destination.destination;
+        destinationsList.appendChild(opt);
+    });
+}
+
+function buildPage(singleInfo, tripInfo, destinationInfo) {
+    console.log('single', singleInfo);
+  createTravelerProfile(singleInfo, tripInfo, destinationInfo);
+  displayTrips(traveler);
+  yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent(
+    "2020"
+  )}`;
+}
+
+function createTravelerProfile(singleInfo, tripInfo, destinationInfo) {
+  traveler = new Traveler(singleInfo, tripInfo, destinationInfo);
+}
+
+function makeNewTrip() {
+    let travelerInputValue = parseInt(travelersInput.value);
+    let durationInputValue = parseInt(durationInput.value);
+    let newDateFormat = startDate.value.split("-").join("/");
+    let destinationInputValue = filterDestinations()
+    let uniqueID = getNewID();
+
+    newTrip = {
+      id: uniqueID,
+      userID: singleInfo.id,
+      destinationID: destinationInputValue,
+      travelers: travelerInputValue,
+      date: newDateFormat,
+      duration: durationInputValue,
+      status: "pending",
+      suggestedActivities: [],
+    };
+    console.log(newTrip)
+    return newTrip;
+}
+
+function filterDestinations() {
+    let destinationBookingID;
+    destinationInfo.forEach(destination => {
+        if (destination.destination === destinationsList.value) {
+            destinationBookingID = destination.id;
+        }
+    })
+    return destinationBookingID;
+}
+
+function getNewID() {
+    return tripInfo.length + 1
+}
+
+function submitTripRequest() {
+    let postOption = makeNewTrip();
+    let newTripBooking = new ApiCall(
+        "http://localhost:3001/api/v1/trips"
+    );
+    newTripBooking.postRequest(postOption);
+}
 
 
-             function makeNewTrip() {
-               let travelerInputValue = parseInt(travelersInput.value);
-               let durationInputValue = parseInt(durationInput.value);
-               let newDateFormat = startDate.value.split("-").join("/");
-               let destinationInputValue = filterDestinations()
-
-               newTrip = {
-                 id: uniqueID,
-                 userID: 21,
-                 destinationID: destinationInputValue,
-                 travelers: travelerInputValue,
-                 date: newDateFormat,
-                 duration: durationInputValue,
-                 status: "pending",
-                 suggestedActivities: [],
-               };
-               return newTrip;
-             }
-
-             function filterDestinations() {
-               let destinationBookingID;
-               destinationInfo.forEach(destination => {
-                   if (destination.destination === destinationsList.value) {
-                       destinationBookingID = destination.id;
-                   }
-               })
-               return destinationBookingID;
-             }
-
-             function getNewID() {
-                 uniqueID = tripInfo.length + 1
-             }
-
-            
-           function addTrip() {
-               let postOption = makeNewTrip();
-               let newTripBooking = new ApiCall('http://localhost:3001/api/v1/trips')
-               newTripBooking.postRequest(postOption);
-            }
-            
-            
-           //method that gets teh destination ID from the users destination value - 
-            
-            function submitTripRequest() {
-                //addTrip();
-                //let bookNewTrip = new ApiCall
-                // apiCalls.postRequest(newPost);
-                // addTravelerTrip();
-            }
-            
-
-            function displayTrips(tripsList) {
-                tripsArea.innerHTML = '';
-                tripsList.trips.forEach(trip => {
-                    let tripsHTML = `
+function displayTrips(tripsList) {
+    tripsArea.innerHTML = '';
+    tripsList.trips.forEach(trip => {
+        let tripsHTML = `
                     <div class='info-card'>
                     <div class="image-styling">
                     <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
@@ -200,29 +195,29 @@ function toggleHamburgerMenuDropdown() {
                     <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
                     <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
                     </div>`;
-                    tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
-                })
-            }
-            
-            function show(element) {
-                element.classList.remove("hidden");
-            }
-            
-            function hide(element) {
-                element.classList.add("hidden");
-            }
-            
-            function displayPendingTrips() {
-                hide(tripsArea)
-                show(pendingTripsArea);
-                hide(upcomingTripsArea);
-                hide(pastTripsArea);
-                hide(allTripsText)
-                hide(yearCost);
-                hide(currentTripsArea);
-                let pendingTripsList = traveler.getPendingTrips();
-                
-                if (pendingTripsList.length === 0) {
+        tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
+    })
+}
+
+function show(element) {
+    element.classList.remove("hidden");
+}
+
+function hide(element) {
+    element.classList.add("hidden");
+}
+
+function displayPendingTrips() {
+    hide(tripsArea)
+    show(pendingTripsArea);
+    hide(upcomingTripsArea);
+    hide(pastTripsArea);
+    hide(allTripsText)
+    hide(yearCost);
+    hide(currentTripsArea);
+    let pendingTripsList = traveler.getPendingTrips();
+
+    if (pendingTripsList.length === 0) {
         pendingTripsText.innerText = 'You Have No Pending Trips!'
     } else {
         pendingTripsArea.innerHTML = '';
@@ -367,18 +362,21 @@ function displayEstimatedCosts(event) {
 // }
 
 // function formatDate(tripDate) {
-    //     let today = new Date(tripDate);
-    //     let month = "" + (today.getMonth() + 1);
-    //     let day = "" + today.getDate();
-    //     let year = today.getFullYear();
-    
-    //     if (month.length < 2) {
-        //       month = "0" + month;
-        //     }
-        
-        //     if (day.length < 2) {
-            //       day = "0" + day;
-            //     }
-            
-            //     return [year, month, day].join('/');
-            //   }
+//     let today = new Date(tripDate);
+//     let month = "" + (today.getMonth() + 1);
+//     let day = "" + today.getDate();
+//     let year = today.getFullYear();
+
+//     if (month.length < 2) {
+//       month = "0" + month;
+//     }
+
+//     if (day.length < 2) {
+//       day = "0" + day;
+//     }
+
+//     return [year, month, day].join('/');
+//   }
+
+// .toLocaleString() - adds commas
+// .toLocaleString("en-US", {style: "currency", currency: "USD"})
