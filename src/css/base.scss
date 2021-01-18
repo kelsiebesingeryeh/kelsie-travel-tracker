@@ -22,8 +22,8 @@ h1 {
 .book-trip-form {
   display: flex;
   justify-content: space-around;
-
 }
+
 .label-names {
   display: block;
   font-size: .65rem;
@@ -50,4 +50,77 @@ h1 {
 .estimated-trip-cost {
   color: $hot-pink;
   text-align: center;
+}
+
+.hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 550px) {
+  .login-text {
+    margin-top: 35%;
+  }
+
+  h1,
+  .year-cost,
+  .all-trips {
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .book-trip-form {
+    flex-direction: column;
+    align-items: center;
+  }
+  .book-travel-button {
+    margin-top: 5%;
+  }
+
+  .label-styling {
+    margin-top: 5%;
+    text-align: center;
+  }
+
+  .nav-bar {
+    display: none;
+  }
+
+  .hamburger {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    background-image: url('../images/hamburger.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 60px;
+    width: 60px;
+    background-color: $off-white;
+    z-index: 2;
+  }
+
+  .hamburger:hover {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hamburger-content {
+    background-color: $light-grey;
+    color: $dark-green;
+    cursor: pointer;
+    margin-left: 28px;
+    margin-top: 61px;
+  }
+
+  .dropdown-item {
+    border: none;
+    font-size: .80em;
+    line-height: 30px;
+    padding: .35em;
+  }
+
+  .dropdown-item:hover {
+    box-shadow: inset 0px 0px 4px;
+  }
+
 }

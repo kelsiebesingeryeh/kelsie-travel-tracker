@@ -36,6 +36,10 @@ let userView = document.querySelector(".user-view");
 let loginPage = document.querySelector(".login-page");
 let navbar = document.querySelector(".nav-bar");
 
+let hamburgerMenu = document.querySelector(".hamburger");
+let hamburgerMenuContent = document.querySelector(".hamburger-content");
+
+
 let travelerApi;
 let destinationApi;
 let tripApi;
@@ -56,11 +60,21 @@ bookTravelButton.addEventListener("click", () => {
     displayEstimatedCosts(event);
 });
 loginSubmitButton.addEventListener('click', () => {
-    userView.classList.remove("hidden");
-    loginPage.classList.add("hidden");
-    navbar.classList.remove('hidden');
+    show(userView);
+    show(navbar);
+    hide(loginPage);
+    show(hamburgerMenu);
     getAllData();
 });
+
+hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
+
+function toggleHamburgerMenuDropdown() {
+    hamburgerMenuContent.classList.toggle('hidden');
+}
+
+
+
 // homeButton.addEventListener("click", returnHome);
 
 function getAllData() {
