@@ -7,6 +7,7 @@ import domUpdates from './domUpdates';
 let tripsArea = document.querySelector('.travel-card-container');
 let yearCost = document.querySelector('.year-cost')
 let allTripsText = document.querySelector(".all-trips");
+let destinationsList = document.querySelector(".destinations-list");
 
 let pendingTrips = document.querySelector('.pending-trips');
 let pendingTripsArea = document.querySelector(".pending-trips-area");
@@ -25,22 +26,28 @@ let currentTrips = document.querySelector(".current-trips");
 let currentTripsArea = document.querySelector(".current-trips-area");
 let currentTripsText = document.querySelector(".current-trips-text");
 
+let bookTravelButton = document.querySelector('.book-travel-button')
+
 let travelerApi;
 let destinationApi;
 let tripApi;
 let traveler;
+let chosenDate;
+let destinationInfo;
 
 window.onload = getAllData();
 pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
+bookTravelButton.addEventListener("click", setChosenDate);
 // homeButton.addEventListener("click", returnHome);
 
 function getAllData() {
     travelerApi = new ApiCall('http://localhost:3001/api/v1/travelers', 'travelers');
     destinationApi = new ApiCall("http://localhost:3001/api/v1/destinations", 'destinations');
     tripApi = new ApiCall("http://localhost:3001/api/v1/trips", 'trips');
+    // singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/${id}`);
     onLoad();
 }
 
@@ -52,11 +59,26 @@ function onLoad() {
    return Promise.all([travelerData, destinationData, tripData])
     .then(data => {
         let travelerInfo = data[0];
-        let destinationInfo = data[1];
+        destinationInfo = data[1];
         let tripInfo = data[2];
         buildPage(travelerInfo, tripInfo, destinationInfo);
+        fillDropdown();
     })
     .catch(error => console.log(error))
+}
+
+function fillDropdown() {
+    let sortedDestinations = destinationInfo.sort((a, b) => {
+        if (a.destination < b.destination) {
+            return - 1
+        }
+    })
+    sortedDestinations.forEach((destination) => {
+      let opt = document.createElement("option");
+      opt.innerHTML = destination.destination;
+      opt.value = destination.destination;
+      destinationsList.appendChild(opt);
+    });
 }
 
 function buildPage(travelerInfo, tripInfo, destinationInfo) {
@@ -92,6 +114,8 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
     function displayPendingTrips() {
         tripsArea.classList.add('hidden');
         pendingTripsArea.classList.remove("hidden");
+        upcomingTripsArea.classList.add("hidden");
+        pastTripsArea.classList.add("hidden");
         allTripsText.classList.add('hidden');
         yearCost.classList.add('hidden');
         let pendingTripsList = traveler.getPendingTrips();
@@ -121,6 +145,8 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
     function displayUpcomingTrips() {
         tripsArea.classList.add("hidden");
         upcomingTripsArea.classList.remove("hidden");
+        pendingTripsArea.classList.add("hidden");
+        pastTripsArea.classList.add("hidden");
         allTripsText.classList.add("hidden");
         yearCost.classList.add("hidden");
         let upcomingTripsList = traveler.getUpcomingTrips();
@@ -150,6 +176,8 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
     function displayPastTrips() {
         tripsArea.classList.add("hidden");
         pastTripsArea.classList.remove("hidden");
+        upcomingTripsArea.classList.add("hidden");
+        pendingTripsArea.classList.add("hidden");
         allTripsText.classList.add("hidden");
         yearCost.classList.add("hidden");
         let pastTripsList = traveler.getPastTrips();
@@ -203,7 +231,12 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
        }
      }
 
-
+    function setChosenDate() {
+         const datePicker = document.querySelector(".date-picker");
+         chosenDate = datePicker.value.split("-").join("/");
+         console.log(chosenDate)
+         return chosenDate
+     }
 
 
 // function returnHome() {
