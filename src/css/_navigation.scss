@@ -1,0 +1,33 @@
+ul {
+    background-color: $light-grey;
+    display: flex;
+    font-family: $montserrat-font;
+    justify-content: flex-end;
+    list-style-type: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+li {
+    float: right;
+
+    &:hover {
+        background-color: $hot-pink;
+    }
+}
+
+.nav-left {
+    float: left;
+}
+
+li {
+    a {
+        color: $dark-green;
+        display: block;
+        font-weight: bold;
+        padding: 0.875rem 1rem;
+        text-align: center;
+        text-decoration: none;
+    }
+}
