@@ -49,6 +49,8 @@ let destinationInfo;
 let trip;
 let singleTraveler;
 let singleInfo;
+let newTrip;
+let uniqueID;
 
 window.onload = getAllData();
 
@@ -58,6 +60,8 @@ pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
 bookTravelButton.addEventListener("click", () => {
     displayEstimatedCosts(event);
+    makeNewTrip();
+    //submitTripRequest();
 });
 loginSubmitButton.addEventListener('click', () => {
     show(userView);
@@ -72,104 +76,153 @@ hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
 function toggleHamburgerMenuDropdown() {
     hamburgerMenuContent.classList.toggle('hidden');
 }
+            
+            // homeButton.addEventListener("click", returnHome);
+            
+            function getAllData() {
+                travelerApi = new ApiCall('http://localhost:3001/api/v1/travelers', 'travelers');
+                destinationApi = new ApiCall("http://localhost:3001/api/v1/destinations", 'destinations');
+                tripApi = new ApiCall("http://localhost:3001/api/v1/trips", 'trips');
+                singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/1`);
+                onLoad();
+            }
+            
+            function onLoad() {
+                let travelerData = travelerApi.getRequest();
+                let destinationData = destinationApi.getRequest();
+                let tripData = tripApi.getRequest();
+                let singleData = singleTraveler.getRequest();
+                // console.log(singleData)
+                
+                return Promise.all([travelerData, destinationData, tripData, singleData])
+                .then(data => {
+                    let travelerInfo = data[0][20];
+                    destinationInfo = data[1];
+                    tripInfo = data[2];
+                    singleInfo = data[3];
+                    buildPage(travelerInfo, tripInfo, destinationInfo, singleData);
+                    fillDropdown();
+                })
+                .catch(error => console.log(error))
+            }
+            
+            function fillDropdown() {
+                let sortedDestinations = destinationInfo.sort((a, b) => {
+                    if (a.destination < b.destination) {
+                        return -1
+                    }
+                })
+                sortedDestinations.forEach((destination) => {
+                    let opt = document.createElement("option");
+                    opt.innerHTML = destination.destination;
+                    opt.value = destination.destination;
+                    destinationsList.appendChild(opt);
+                });
+            }
+            
+            function buildPage(travelerInfo, tripInfo, destinationInfo) {
+                createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
+                displayTrips(traveler);
+                yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
+            }
+            
+            function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
+                // let userID = Math.floor(Math.random() * 49) + 1;
+                // let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
+                traveler = new Traveler(travelerInfo, tripInfo, destinationInfo);
+                //console.log(tripInfo);
+                getNewID();
+            }
 
 
+             function makeNewTrip() {
+               let travelerInputValue = parseInt(travelersInput.value);
+               let durationInputValue = parseInt(durationInput.value);
+               let newDateFormat = startDate.value.split("-").join("/");
+               let destinationInputValue = filterDestinations()
 
-// homeButton.addEventListener("click", returnHome);
+               newTrip = {
+                 id: uniqueID,
+                 userID: 21,
+                 destinationID: destinationInputValue,
+                 travelers: travelerInputValue,
+                 date: newDateFormat,
+                 duration: durationInputValue,
+                 status: "pending",
+                 suggestedActivities: [],
+               };
+               return newTrip;
+             }
 
-function getAllData() {
-    travelerApi = new ApiCall('http://localhost:3001/api/v1/travelers', 'travelers');
-    destinationApi = new ApiCall("http://localhost:3001/api/v1/destinations", 'destinations');
-    tripApi = new ApiCall("http://localhost:3001/api/v1/trips", 'trips');
-    singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/1`);
-    onLoad();
-}
+             function filterDestinations() {
+               let destinationBookingID;
+               destinationInfo.forEach(destination => {
+                   if (destination.destination === destinationsList.value) {
+                       destinationBookingID = destination.id;
+                   }
+               })
+               return destinationBookingID;
+             }
 
-function onLoad() {
-    let travelerData = travelerApi.getRequest();
-    let destinationData = destinationApi.getRequest();
-    let tripData = tripApi.getRequest();
-    let singleData = singleTraveler.getRequest();
-    console.log(singleData)
+             function getNewID() {
+                 uniqueID = tripInfo.length + 1
+             }
 
-    return Promise.all([travelerData, destinationData, tripData, singleData])
-        .then(data => {
-            console.log(data)
-            let travelerInfo = data[0][20];
-            console.log(travelerInfo)
-            destinationInfo = data[1];
-            tripInfo = data[2];
-            singleInfo = data[3];
-            console.log(singleInfo)
-            buildPage(travelerInfo, tripInfo, destinationInfo, singleData);
-            fillDropdown();
-        })
-        .catch(error => console.log(error))
-}
+            
+           function addTrip() {
+               let postOption = makeNewTrip();
+               let newTripBooking = new ApiCall('http://localhost:3001/api/v1/trips')
+               newTripBooking.postRequest(postOption);
+            }
+            
+            
+           //method that gets teh destination ID from the users destination value - 
+            
+            function submitTripRequest() {
+                //addTrip();
+                //let bookNewTrip = new ApiCall
+                // apiCalls.postRequest(newPost);
+                // addTravelerTrip();
+            }
+            
 
-function fillDropdown() {
-    let sortedDestinations = destinationInfo.sort((a, b) => {
-        if (a.destination < b.destination) {
-            return -1
-        }
-    })
-    sortedDestinations.forEach((destination) => {
-        let opt = document.createElement("option");
-        opt.innerHTML = destination.destination;
-        opt.value = destination.destination;
-        destinationsList.appendChild(opt);
-    });
-}
-
-function buildPage(travelerInfo, tripInfo, destinationInfo) {
-    createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
-    displayTrips(traveler);
-    yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
-}
-
-function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
-    // let userID = Math.floor(Math.random() * 49) + 1;
-    // let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
-    traveler = new Traveler(travelerInfo, tripInfo, destinationInfo);
-}
-
-function displayTrips(tripsList) {
-    tripsArea.innerHTML = '';
-    tripsList.trips.forEach(trip => {
-        let tripsHTML = `
-        <div class='info-card'>
-            <div class="image-styling">
-                <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
-            </div>
-            <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
-            <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
-            <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
-            <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
-            <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
-        </div>`;
-        tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
-    })
-}
-
-function show(element) {
-element.classList.remove("hidden");
-}
-
-function hide(element) {
-element.classList.add("hidden");
-}
-
-function displayPendingTrips() {
-    hide(tripsArea)
-    show(pendingTripsArea);
-    hide(upcomingTripsArea);
-    hide(pastTripsArea);
-    hide(allTripsText)
-    hide(yearCost);
-    hide(currentTripsArea);
-    let pendingTripsList = traveler.getPendingTrips();
-
-    if (pendingTripsList.length === 0) {
+            function displayTrips(tripsList) {
+                tripsArea.innerHTML = '';
+                tripsList.trips.forEach(trip => {
+                    let tripsHTML = `
+                    <div class='info-card'>
+                    <div class="image-styling">
+                    <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
+                    </div>
+                    <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
+                    <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
+                    <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
+                    <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
+                    <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+                    </div>`;
+                    tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
+                })
+            }
+            
+            function show(element) {
+                element.classList.remove("hidden");
+            }
+            
+            function hide(element) {
+                element.classList.add("hidden");
+            }
+            
+            function displayPendingTrips() {
+                hide(tripsArea)
+                show(pendingTripsArea);
+                hide(upcomingTripsArea);
+                hide(pastTripsArea);
+                hide(allTripsText)
+                hide(yearCost);
+                hide(currentTripsArea);
+                let pendingTripsList = traveler.getPendingTrips();
+                
+                if (pendingTripsList.length === 0) {
         pendingTripsText.innerText = 'You Have No Pending Trips!'
     } else {
         pendingTripsArea.innerHTML = '';
@@ -312,3 +365,20 @@ function displayEstimatedCosts(event) {
 //   console.log("home");
 //   getAllData();
 // }
+
+// function formatDate(tripDate) {
+    //     let today = new Date(tripDate);
+    //     let month = "" + (today.getMonth() + 1);
+    //     let day = "" + today.getDate();
+    //     let year = today.getFullYear();
+    
+    //     if (month.length < 2) {
+        //       month = "0" + month;
+        //     }
+        
+        //     if (day.length < 2) {
+            //       day = "0" + day;
+            //     }
+            
+            //     return [year, month, day].join('/');
+            //   }
