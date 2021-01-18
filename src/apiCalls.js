@@ -1,15 +1,45 @@
 class ApiCall {
-    constructor(url, name) {
-        this.url = url;
-        this.name = name;
-    }
-    getRequest() {
-        return fetch(this.url)
-            .then(response => response.json())
-            .then(data => data = data[this.name])
-            .catch(error => console.log(error))
-    }
+  constructor(url, name) {
+    this.url = url;
+    this.name = name;
+  }
+  getRequest() {
+    return fetch(this.url)
+      .then((response) => response.json())
+      .then((data) => (data = data[this.name]))
+      .catch((error) => console.log(error));
+  }
 }
+//   postRequest(newPost, onSuccess) {
+//       return fetch(this.url, {
+//           method: "POST",
+//           headers: {
+//               'Content-Type: application/json'
+//           },
+//           body: JSON.stringify(newPost)
+//       })
+//       .then(response => response.json())
+//       .then(json => {
+//           console.log(json);
+//           onSuccess();
+//       })
+//       .catch(error => console.log(error))
+//   }
+
+
+//   //         body: JSON.stringify({
+//   //             id: <number>,
+//   //             userID: <number>,
+//   //             destinationID: <number>,
+//   //             travelers: <number>,
+//   //             date: <string 'YYYY/MM/DD'>,
+//   //             duration: <number>,
+//   //             status: <string 'approved' or 'pending'>,
+//   //             suggestedActivities: <array of strings>
+//   //             }),
+//   //     };
+//   // }
+// }
 
 export default ApiCall;
 
@@ -61,4 +91,4 @@ export default ApiCall;
 // need to figure out promise.all - how to run this
 // figure out if apiCalls should be an object or a class
 
-// ;
+//

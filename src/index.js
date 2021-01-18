@@ -34,15 +34,17 @@ let estimatedTripCost = document.querySelector(".estimated-trip-cost");
 let loginSubmitButton = document.querySelector(".submit-button");
 let userView = document.querySelector(".user-view");
 let loginPage = document.querySelector(".login-page");
+let navbar = document.querySelector(".nav-bar");
 
 let travelerApi;
 let destinationApi;
 let tripApi;
 let traveler;
-let chosenDate;
 let tripInfo;
 let destinationInfo;
 let trip;
+let singleTraveler;
+let singleInfo;
 
 window.onload = getAllData();
 
@@ -56,6 +58,7 @@ bookTravelButton.addEventListener("click", () => {
 loginSubmitButton.addEventListener('click', () => {
     userView.classList.remove("hidden");
     loginPage.classList.add("hidden");
+    navbar.classList.remove('hidden');
     getAllData();
 });
 // homeButton.addEventListener("click", returnHome);
@@ -64,7 +67,7 @@ function getAllData() {
     travelerApi = new ApiCall('http://localhost:3001/api/v1/travelers', 'travelers');
     destinationApi = new ApiCall("http://localhost:3001/api/v1/destinations", 'destinations');
     tripApi = new ApiCall("http://localhost:3001/api/v1/trips", 'trips');
-    // singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/${id}`);
+    singleTraveler = new ApiCall(`http://localhost:3001/api/v1/travelers/1`);
     onLoad();
 }
 
@@ -72,67 +75,54 @@ function onLoad() {
     let travelerData = travelerApi.getRequest();
     let destinationData = destinationApi.getRequest();
     let tripData = tripApi.getRequest();
+    let singleData = singleTraveler.getRequest();
+    console.log(singleData)
 
-   return Promise.all([travelerData, destinationData, tripData])
-    .then(data => {
-        let travelerInfo = data[0];
-        destinationInfo = data[1];
-        tripInfo = data[2];
-        buildPage(travelerInfo, tripInfo, destinationInfo);
-        fillDropdown();
-    })
-    .catch(error => console.log(error))
+    return Promise.all([travelerData, destinationData, tripData, singleData])
+        .then(data => {
+            console.log(data)
+            let travelerInfo = data[0][0];
+            console.log(travelerInfo)
+            destinationInfo = data[1];
+            tripInfo = data[2];
+            singleInfo = data[3];
+            console.log(singleInfo)
+            buildPage(travelerInfo, tripInfo, destinationInfo, singleData);
+            fillDropdown();
+        })
+        .catch(error => console.log(error))
 }
 
 function fillDropdown() {
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
-            return - 1
+            return -1
         }
     })
     sortedDestinations.forEach((destination) => {
-      let opt = document.createElement("option");
-      opt.innerHTML = destination.destination;
-      opt.value = destination.destination;
-      destinationsList.appendChild(opt);
+        let opt = document.createElement("option");
+        opt.innerHTML = destination.destination;
+        opt.value = destination.destination;
+        destinationsList.appendChild(opt);
     });
 }
 
-// function createPostOption() {
-//     return {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//             id: <number>, 
-//             userID: <number>,
-//             destinationID: <number>,
-//             travelers: <number>,
-//             date: <string 'YYYY/MM/DD'>,
-//             duration: <number>, 
-//             status: <string 'approved' or 'pending'>,
-//             suggestedActivities: <array of strings>
-//             }),
-//     };
-// }
-
 function buildPage(travelerInfo, tripInfo, destinationInfo) {
-  createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
-  displayTrips(traveler);
-  yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
+    createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
+    displayTrips(traveler);
+    yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
 }
 
 function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
- let userID = Math.floor(Math.random() * 49) + 1;
- let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
- traveler = new Traveler(newTraveler, tripInfo, destinationInfo);
+    // let userID = Math.floor(Math.random() * 49) + 1;
+    // let newTraveler = travelerInfo.find((traveler) => traveler.id === Number(userID));
+    traveler = new Traveler(travelerInfo, tripInfo, destinationInfo);
 }
 
- function displayTrips(tripsList) {
-        tripsArea.innerHTML = '';
-        tripsList.trips.forEach(trip => {
-            let tripsHTML = `
+function displayTrips(tripsList) {
+    tripsArea.innerHTML = '';
+    tripsList.trips.forEach(trip => {
+        let tripsHTML = `
         <div class='info-card'>
             <div class="image-styling">
                 <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
@@ -143,25 +133,56 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
             <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
             <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
         </div>`;
-            tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
+        tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
+    })
+}
+
+function displayPendingTrips() {
+    tripsArea.classList.add('hidden');
+    pendingTripsArea.classList.remove("hidden");
+    upcomingTripsArea.classList.add("hidden");
+    pastTripsArea.classList.add("hidden");
+    allTripsText.classList.add('hidden');
+    yearCost.classList.add('hidden');
+    let pendingTripsList = traveler.getPendingTrips();
+
+    if (pendingTripsList.length === 0) {
+        pendingTripsText.innerText = 'You Have No Pending Trips!'
+    } else {
+        pendingTripsArea.innerHTML = '';
+        pendingTripsList.forEach(trip => {
+            let pendingTripsHTML = `
+           <div class='info-card'>
+               <div class="image-styling">
+                   <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
+               </div>
+               <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
+               <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
+               <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
+               <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
+               <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+           </div>
+       `;
+            pendingTripsArea.insertAdjacentHTML('beforeend', pendingTripsHTML)
         })
     }
+}
 
-    function displayPendingTrips() {
-        tripsArea.classList.add('hidden');
-        pendingTripsArea.classList.remove("hidden");
-        upcomingTripsArea.classList.add("hidden");
-        pastTripsArea.classList.add("hidden");
-        allTripsText.classList.add('hidden');
-        yearCost.classList.add('hidden');
-        let pendingTripsList = traveler.getPendingTrips();
+function displayUpcomingTrips() {
+    tripsArea.classList.add("hidden");
+    upcomingTripsArea.classList.remove("hidden");
+    pendingTripsArea.classList.add("hidden");
+    pastTripsArea.classList.add("hidden");
+    allTripsText.classList.add("hidden");
+    yearCost.classList.add("hidden");
+    let upcomingTripsList = traveler.getUpcomingTrips();
 
-        if (pendingTripsList.length === 0) {
-            pendingTripsText.innerText = 'You Have No Pending Trips!'
-        } else {
-            pendingTripsArea.innerHTML = '';
-            pendingTripsList.forEach(trip => {
-                let pendingTripsHTML = `
+    if (upcomingTripsList.length === 0) {
+        upcomingTripsText.innerText = "You Have No Upcoming Trips!";
+    } else {
+        upcomingTripsArea.innerHTML = "";
+        upcomingTripsList.forEach((trip) => {
+            let upcomingTripsHTML = `
            <div class='info-card'>
                <div class="image-styling">
                    <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
@@ -173,57 +194,26 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
                <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
            </div>
        `;
-                pendingTripsArea.insertAdjacentHTML('beforeend', pendingTripsHTML)
-            })
-        }
+            upcomingTripsArea.insertAdjacentHTML("beforeend", upcomingTripsHTML);
+        });
     }
+}
 
-    function displayUpcomingTrips() {
-        tripsArea.classList.add("hidden");
-        upcomingTripsArea.classList.remove("hidden");
-        pendingTripsArea.classList.add("hidden");
-        pastTripsArea.classList.add("hidden");
-        allTripsText.classList.add("hidden");
-        yearCost.classList.add("hidden");
-        let upcomingTripsList = traveler.getUpcomingTrips();
+function displayPastTrips() {
+    tripsArea.classList.add("hidden");
+    pastTripsArea.classList.remove("hidden");
+    upcomingTripsArea.classList.add("hidden");
+    pendingTripsArea.classList.add("hidden");
+    allTripsText.classList.add("hidden");
+    yearCost.classList.add("hidden");
+    let pastTripsList = traveler.getPastTrips();
 
-        if (upcomingTripsList.length === 0) {
-            upcomingTripsText.innerText = "You Have No Upcoming Trips!";
-        } else {
-            upcomingTripsArea.innerHTML = "";
-            upcomingTripsList.forEach((trip) => {
-                let upcomingTripsHTML = `
-           <div class='info-card'>
-               <div class="image-styling">
-                   <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
-               </div>
-               <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
-               <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
-               <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
-               <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
-               <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
-           </div>
-       `;
-                upcomingTripsArea.insertAdjacentHTML("beforeend", upcomingTripsHTML);
-            });
-        }
-    }
-
-    function displayPastTrips() {
-        tripsArea.classList.add("hidden");
-        pastTripsArea.classList.remove("hidden");
-        upcomingTripsArea.classList.add("hidden");
-        pendingTripsArea.classList.add("hidden");
-        allTripsText.classList.add("hidden");
-        yearCost.classList.add("hidden");
-        let pastTripsList = traveler.getPastTrips();
-
-        if (pastTripsList.length === 0) {
-            pastTripsText.innerText = "You Have No Past Trips!";
-        } else {
-            pastTripsArea.innerHTML = "";
-            pastTripsList.forEach((trip) => {
-                let pastTripsHTML = `
+    if (pastTripsList.length === 0) {
+        pastTripsText.innerText = "You Have No Past Trips!";
+    } else {
+        pastTripsArea.innerHTML = "";
+        pastTripsList.forEach((trip) => {
+            let pastTripsHTML = `
            <div class='info-card'>
                <div class="image-styling">
                    <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
@@ -234,24 +224,24 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
                <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
                <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
            </div>`;
-                pastTripsArea.insertAdjacentHTML("beforeend", pastTripsHTML);
-            });
-        }
+            pastTripsArea.insertAdjacentHTML("beforeend", pastTripsHTML);
+        });
     }
+}
 
-     function displayCurrentTrips() {
-       tripsArea.classList.add("hidden");
-       currentTripsArea.classList.remove("hidden");
-       allTripsText.classList.add("hidden");
-       yearCost.classList.add("hidden");
-       let currentTripsList = traveler.getCurrentTrips();
+function displayCurrentTrips() {
+    tripsArea.classList.add("hidden");
+    currentTripsArea.classList.remove("hidden");
+    allTripsText.classList.add("hidden");
+    yearCost.classList.add("hidden");
+    let currentTripsList = traveler.getCurrentTrips();
 
-       if (currentTripsList.length === 0) {
-         currentTripsText.innerText = "You Have No Current Trips!";
-       } else {
-         currentTripsArea.innerHTML = "";
-         currentTripsList.forEach((trip) => {
-           let currentTripsHTML = `
+    if (currentTripsList.length === 0) {
+        currentTripsText.innerText = "You Have No Current Trips!";
+    } else {
+        currentTripsArea.innerHTML = "";
+        currentTripsList.forEach((trip) => {
+            let currentTripsHTML = `
            <div class='info-card'>
                <div class="image-styling">
                    <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
@@ -262,42 +252,30 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
                <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
                <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
            </div>`;
-           currentTripsArea.insertAdjacentHTML("beforeend", currentTripsHTML);
-         });
-       }
-     }
+            currentTripsArea.insertAdjacentHTML("beforeend", currentTripsHTML);
+        });
+    }
+}
 
-    // function setChosenDate() {
-    //      const datePicker = document.querySelector(".date-picker");
-    //      chosenDate = datePicker.value.split("-").join("/");
-    //      console.log(chosenDate)
-    //      return chosenDate
-    //  }
+function displayEstimatedCosts(event) {
+    event.preventDefault()
+    tripInfo.forEach((trip) => {
+        destinationInfo.forEach(destination => {
+            trip = new Trip(trip, destinationInfo);
+            if (destinationsList.value === destination.destination) {
+                let durationValue = durationInput.value;
+                let travelersValue = travelersInput.value;
+                estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(destination, durationValue, travelersValue)}`;
+            }
+        })
+    })
+}
 
-     function displayEstimatedCosts(event) {
-         event.preventDefault()
-         tripInfo.forEach((trip) => {
-             destinationInfo.forEach(destination => {
-                 trip = new Trip(trip, destinationInfo);
-                 if (destinationsList.value === destination.destination) {
-                    let durationValue = durationInput.value;
-                    let travelersValue = travelersInput.value;
-                  estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(destination, durationValue, travelersValue)}`;
-                 }
-             })
-            })
-        }
-    
-    // let totalLodging = (this.destination.estimatedLodgingCostPerDay * durationInput.value) * travelersInput.value
-    // let totalFlight = (this.destination.estimatedFlightCostPerPerson * travelersInput.value)
-    // let totalTripCost = totalLodging + totalFlight;
-    // let agentFee = totalTripCost * 0.1;
-    // return totalTripCost + agentFee;
 
-            //console.log(durationInput.value)
-            //console.log(travelersInput.value);
-            // console.log(destinationsList.value);
-            // console.log(startDate.value.split("-").join("/"));
+//console.log(durationInput.value)
+//console.log(travelersInput.value);
+// console.log(destinationsList.value);
+// console.log(startDate.value.split("-").join("/"));
 
 
 // function returnHome() {
