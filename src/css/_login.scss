@@ -1,0 +1,35 @@
+.login-text {
+    text-align: center;
+    margin-top: 15%;
+}
+
+.login-container {
+    margin: auto;
+}
+
+.login-form {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-form-field {
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 8px 0;
+    padding: 12px 20px;
+    width: 100%;
+}
+
+.submit-button {
+    background-color: $hot-pink;
+    border: none;
+    border-radius: 10px;
+    color: $off-white;
+    font-family: $montserrat-font;
+    margin: 8px 0;
+    padding: 14px 20px;
+    width: 100%;
+}

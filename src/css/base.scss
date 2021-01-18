@@ -1,84 +1,18 @@
 @import 'variables';
+@import 'navigation';
+@import 'login';
+@import 'card';
 
 body {
   background: $off-white;
   font-family: $montserrat-font;
 }
 
-ul {
-  display: flex;
-  justify-content: flex-end;
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: $light-grey;
-  font-family: $montserrat-font;
-}
-
-li {
-  float: right;
-   &:hover {
-     background-color: $hot-pink;
-   }
-}
-
-.nav-left {
-  float: left;
-}
-
-li {
-    a {
-      display: block;
-      color: $dark-green;
-      font-weight: bold;
-      text-align: center;
-      padding: 0.875rem 1rem;
-      text-decoration: none;
-    }
-}
-
 h1 {
-  font-family: $montserrat-font;
-  font-weight: bold;
   color: $hot-pink;
+  font-family: $montserrat-font;
   font-size: 2rem;
-}
-
-.login-text {
-  text-align: center;
-  margin-top: 15%;
-}
-
-.login-container {
-  margin: auto;
-}
-
-.login-form {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.login-form-field {
-  width: 100%;
-  display: inline-block;
-  box-sizing: border-box;
-  margin: 8px 0;
-  padding: 12px 20px;
-  border-radius: 10px;
-}
-
-.submit-button {
-  width: 100%;
-  margin: 8px 0;
-  padding: 14px 20px;
-  background-color: #d90368;
-  color: #F8F9FA;
-  border-radius: 10px;
-  font-family: 'Inter', sans-serif;
-  border: none;
+  font-weight: bold;
 }
 
 .year-cost {
@@ -91,65 +25,26 @@ h1 {
 
 }
 .label-names {
+  display: block;
   font-size: .65rem;
   font-weight: bold;
-  display: block;
 }
 
 .book-travel-button {
   background-color: $hot-pink;
+  border: none;
   border-radius: 5px;
   color: $off-white;
   font-family: $montserrat-font;
   width: 5.5rem;
-  border: none;
 }
 
 .user-view {
   margin-top: 5%;
 }
 
-.travel-card-container {
-  display: grid;
-  grid-gap: 3rem;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  justify-items: center;
-  column-gap: 1rem;
-  padding: 30px;
-}
-
-.info-card {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-  justify-content: center;
-  border: 1px solid$slate-grey;
-  border-radius: 5px;
-  box-shadow: $shadow;
-  text-align: center;
-}
-
-.image-styling {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-.trip-image {
-  width: 100%;
-  height: auto;
-  margin-bottom: 25%;
-}
-
-
 .hidden {
   display: none;
-}
-
-p {
-  margin: 0;
-  padding: 0;
 }
 
 .estimated-trip-cost {

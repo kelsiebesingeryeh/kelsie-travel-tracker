@@ -81,7 +81,7 @@ function onLoad() {
     return Promise.all([travelerData, destinationData, tripData, singleData])
         .then(data => {
             console.log(data)
-            let travelerInfo = data[0][0];
+            let travelerInfo = data[0][20];
             console.log(travelerInfo)
             destinationInfo = data[1];
             tripInfo = data[2];
@@ -214,7 +214,6 @@ function displayPastTrips() {
     show(pastTripsArea);
     hide(upcomingTripsArea);
     hide(pendingTripsArea);
-    hide(pastTripsArea);
     hide(allTripsText);
     hide(yearCost);
     hide(currentTripsArea);
@@ -246,6 +245,7 @@ function displayCurrentTrips() {
     show(currentTripsArea)
     hide(upcomingTripsArea);
     hide(pendingTripsArea);
+    hide(pastTripsArea);
     hide(allTripsText);
     hide(yearCost);
     pastTripsArea.classList.add("hidden");
