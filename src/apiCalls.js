@@ -17,7 +17,6 @@ class ApiCall {
     return fetch(this.url)
       .then((response) => response.json())
       .then((data) => {
-          console.log("data", data);
         return data;
       })
       .catch((error) => console.log(error));
@@ -33,7 +32,8 @@ class ApiCall {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        console.log(data)
+        return data;
       })
       .catch((error) => console.log(error));
   }

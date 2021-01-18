@@ -4,16 +4,16 @@ import Traveler from './traveler';
 import ApiCall from './apiCalls';
 import domUpdates from './domUpdates';
 
-let tripsArea = document.querySelector('.travel-card-container');
-let yearCost = document.querySelector('.year-cost')
-let allTripsText = document.querySelector(".all-trips");
-let destinationsList = document.querySelector(".destinations-list");
+const tripsArea = document.querySelector('.travel-card-container');
+const yearCost = document.querySelector(".year-cost");
+const allTripsText = document.querySelector(".all-trips");
+const destinationsList = document.querySelector(".destinations-list");
 
-let pendingTrips = document.querySelector('.pending-trips');
-let pendingTripsArea = document.querySelector(".pending-trips-area");
-let pendingTripsText = document.querySelector(".pending-trips-text");
+const pendingTrips = document.querySelector(".pending-trips");
+const pendingTripsArea = document.querySelector(".pending-trips-area");
+const pendingTripsText = document.querySelector(".pending-trips-text");
 
-// let homeButton = document.querySelector('.home');
+let homeButton = document.querySelector('.home');
 let upcomingTrips = document.querySelector(".upcoming-trips");
 let upcomingTripsArea = document.querySelector(".upcoming-trips-area");
 let upcomingTripsText = document.querySelector(".upcoming-trips-text");
@@ -27,6 +27,7 @@ let currentTripsArea = document.querySelector(".current-trips-area");
 let currentTripsText = document.querySelector(".current-trips-text");
 
 let bookTravelButton = document.querySelector('.book-travel-button')
+const calculateTravelButton = document.querySelector(".calculate-cost-button");
 let durationInput = document.querySelector('.duration');
 let travelersInput = document.querySelector('.travelers');
 let startDate = document.querySelector(".date-picker");
@@ -59,11 +60,21 @@ pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
-bookTravelButton.addEventListener("click", () => {
+calculateTravelButton.addEventListener('click', () => {
     displayEstimatedCosts(event);
-    //makeNewTrip()
+    hide(calculateTravelButton);
+    show(bookTravelButton);
     submitTripRequest();
+})
+
+bookTravelButton.addEventListener("click", () => {
+    hide(bookTravelButton);
+    show(calculateTravelButton);
+    hide(estimatedTripCost);
+    updateNewTripBookings(event);
+    clearTravelInputs();
 });
+
 loginSubmitButton.addEventListener('click', () => {
     show(userView);
     show(navbar);
@@ -105,35 +116,42 @@ function onLoad(id) {
         tripInfo = data[2];
         singleInfo = data[3];
         buildPage(singleInfo, tripInfo, destinationInfo);
-        fillDropdown();
-        })
+    })
         .catch(error => console.log(error))
 }
 
+function updateNewTripBookings(event) {
+    event.preventDefault();
+    getAllData();
+}
+
 function fillDropdown() {
+
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
             return -1
         }
     })
     sortedDestinations.forEach((destination) => {
-        let opt = document.createElement("option");
-        opt.innerHTML = destination.destination;
-        opt.value = destination.destination;
-        destinationsList.appendChild(opt);
+      let destinationsOptions = `<option>${destination.destination}</option>`;
+      destinationsList.insertAdjacentHTML("beforeend", destinationsOptions);
     });
 }
 
+function clearTravelInputs() {
+    durationInput.value = "";
+    travelersInput.value = "";
+    startDate.value = "";
+}
+
 function buildPage(singleInfo, tripInfo, destinationInfo) {
-    console.log('single', singleInfo);
-  createTravelerProfile(singleInfo, tripInfo, destinationInfo);
-  displayTrips(traveler);
-  yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent(
-    "2020"
-  )}`;
+    createTravelerProfile(singleInfo, tripInfo, destinationInfo);
+    displayTrips(traveler);
+    yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
 }
 
 function createTravelerProfile(singleInfo, tripInfo, destinationInfo) {
+  fillDropdown();
   traveler = new Traveler(singleInfo, tripInfo, destinationInfo);
 }
 
@@ -154,7 +172,6 @@ function makeNewTrip() {
       status: "pending",
       suggestedActivities: [],
     };
-    console.log(newTrip)
     return newTrip;
 }
 
@@ -179,7 +196,6 @@ function submitTripRequest() {
     );
     newTripBooking.postRequest(postOption);
 }
-
 
 function displayTrips(tripsList) {
     tripsArea.innerHTML = '';
@@ -356,27 +372,15 @@ function displayEstimatedCosts(event) {
 // console.log(startDate.value.split("-").join("/"));
 
 
-// function returnHome() {
-//   console.log("home");
-//   getAllData();
+// function returnHome(event) {
+// console.log('hi')
+//  show(userView);
+//  getAllData();
+//  hide(currentTripsArea);
+//  hide(pendingTripsArea);
+//  hide(upcomingTripsArea);
+//  hide(pastTripsArea);
 // }
-
-// function formatDate(tripDate) {
-//     let today = new Date(tripDate);
-//     let month = "" + (today.getMonth() + 1);
-//     let day = "" + today.getDate();
-//     let year = today.getFullYear();
-
-//     if (month.length < 2) {
-//       month = "0" + month;
-//     }
-
-//     if (day.length < 2) {
-//       day = "0" + day;
-//     }
-
-//     return [year, month, day].join('/');
-//   }
 
 // .toLocaleString() - adds commas
 // .toLocaleString("en-US", {style: "currency", currency: "USD"})

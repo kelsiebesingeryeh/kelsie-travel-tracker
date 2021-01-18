@@ -30,13 +30,14 @@ h1 {
   font-weight: bold;
 }
 
-.book-travel-button {
+.book-travel-button,
+.calculate-cost-button {
   background-color: $hot-pink;
   border: none;
   border-radius: 5px;
   color: $off-white;
   font-family: $montserrat-font;
-  width: 5.5rem;
+  width: 8.5rem;
 }
 
 .user-view {
@@ -72,7 +73,8 @@ h1 {
     flex-direction: column;
     align-items: center;
   }
-  .book-travel-button {
+  .book-travel-button,
+  .calculate-cost-button {
     margin-top: 5%;
   }
 
@@ -121,6 +123,14 @@ h1 {
 
   .dropdown-item:hover {
     box-shadow: inset 0px 0px 4px;
+  }
+
+  .info-card {
+    width: 100%;
+  }
+
+  .travel-card-container {
+    padding: 0;
   }
 
 }
