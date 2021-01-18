@@ -137,13 +137,22 @@ function displayTrips(tripsList) {
     })
 }
 
+function show(element) {
+element.classList.remove("hidden");
+}
+
+function hide(element) {
+element.classList.add("hidden");
+}
+
 function displayPendingTrips() {
-    tripsArea.classList.add('hidden');
-    pendingTripsArea.classList.remove("hidden");
-    upcomingTripsArea.classList.add("hidden");
-    pastTripsArea.classList.add("hidden");
-    allTripsText.classList.add('hidden');
-    yearCost.classList.add('hidden');
+    hide(tripsArea)
+    show(pendingTripsArea);
+    hide(upcomingTripsArea);
+    hide(pastTripsArea);
+    hide(allTripsText)
+    hide(yearCost);
+    hide(currentTripsArea);
     let pendingTripsList = traveler.getPendingTrips();
 
     if (pendingTripsList.length === 0) {
@@ -169,12 +178,13 @@ function displayPendingTrips() {
 }
 
 function displayUpcomingTrips() {
-    tripsArea.classList.add("hidden");
-    upcomingTripsArea.classList.remove("hidden");
-    pendingTripsArea.classList.add("hidden");
-    pastTripsArea.classList.add("hidden");
-    allTripsText.classList.add("hidden");
-    yearCost.classList.add("hidden");
+    hide(tripsArea);
+    show(upcomingTripsArea);
+    hide(pendingTripsArea);
+    hide(pastTripsArea);
+    hide(allTripsText);
+    hide(yearCost);
+    hide(currentTripsArea);
     let upcomingTripsList = traveler.getUpcomingTrips();
 
     if (upcomingTripsList.length === 0) {
@@ -200,12 +210,14 @@ function displayUpcomingTrips() {
 }
 
 function displayPastTrips() {
-    tripsArea.classList.add("hidden");
-    pastTripsArea.classList.remove("hidden");
-    upcomingTripsArea.classList.add("hidden");
-    pendingTripsArea.classList.add("hidden");
-    allTripsText.classList.add("hidden");
-    yearCost.classList.add("hidden");
+    hide(tripsArea);
+    show(pastTripsArea);
+    hide(upcomingTripsArea);
+    hide(pendingTripsArea);
+    hide(pastTripsArea);
+    hide(allTripsText);
+    hide(yearCost);
+    hide(currentTripsArea);
     let pastTripsList = traveler.getPastTrips();
 
     if (pastTripsList.length === 0) {
@@ -230,10 +242,14 @@ function displayPastTrips() {
 }
 
 function displayCurrentTrips() {
-    tripsArea.classList.add("hidden");
-    currentTripsArea.classList.remove("hidden");
-    allTripsText.classList.add("hidden");
-    yearCost.classList.add("hidden");
+    hide(tripsArea);
+    show(currentTripsArea)
+    hide(upcomingTripsArea);
+    hide(pendingTripsArea);
+    hide(allTripsText);
+    hide(yearCost);
+    pastTripsArea.classList.add("hidden");
+
     let currentTripsList = traveler.getCurrentTrips();
 
     if (currentTripsList.length === 0) {
