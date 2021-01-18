@@ -11,13 +11,13 @@ class Trip {
     this.destination = destinationData;
   }
 
-  calculateEstimatedTripCost() {
+  calculateEstimatedTripCost(destination, duration, travelers) {
     let totalLodging =
-      this.destination.estimatedLodgingCostPerDay *
-      this.duration *
-      this.travelers;
+      destination.estimatedLodgingCostPerDay *
+      duration *
+      travelers;
     let totalFlight =
-      this.destination.estimatedFlightCostPerPerson * this.travelers;
+      destination.estimatedFlightCostPerPerson * travelers;
     let totalTripCost = totalLodging + totalFlight;
     let agentFee = totalTripCost * 0.1;
     return totalTripCost + agentFee;
@@ -41,3 +41,12 @@ class Trip {
   }
 }
 export default Trip;
+
+
+// calculateEstimatedTripCost(destination, duration, travelers) {
+//     let totalLodging = (this.destination.estimatedLodgingCostPerDay * this.duration) * this.travelers;
+//     let totalFlight = this.destination.estimatedFlightCostPerPerson * this.travelers;
+//     let totalTripCost = totalLodging + totalFlight;
+//     let agentFee = totalTripCost * 0.1;
+//     return totalTripCost + agentFee;
+//   }

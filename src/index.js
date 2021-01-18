@@ -27,20 +27,28 @@ let currentTripsArea = document.querySelector(".current-trips-area");
 let currentTripsText = document.querySelector(".current-trips-text");
 
 let bookTravelButton = document.querySelector('.book-travel-button')
+let durationInput = document.querySelector('.duration');
+let travelersInput = document.querySelector('.travelers');
+let startDate = document.querySelector(".date-picker");
+let estimatedTripCost = document.querySelector(".estimated-trip-cost");
 
 let travelerApi;
 let destinationApi;
 let tripApi;
 let traveler;
 let chosenDate;
+let tripInfo;
 let destinationInfo;
+let trip;
 
 window.onload = getAllData();
 pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener('click', displayCurrentTrips)
-bookTravelButton.addEventListener("click", setChosenDate);
+bookTravelButton.addEventListener("click", () => {
+    displayEstimatedCosts(event);
+});
 // homeButton.addEventListener("click", returnHome);
 
 function getAllData() {
@@ -60,7 +68,7 @@ function onLoad() {
     .then(data => {
         let travelerInfo = data[0];
         destinationInfo = data[1];
-        let tripInfo = data[2];
+        tripInfo = data[2];
         buildPage(travelerInfo, tripInfo, destinationInfo);
         fillDropdown();
     })
@@ -80,6 +88,25 @@ function fillDropdown() {
       destinationsList.appendChild(opt);
     });
 }
+
+// function createPostOption() {
+//     return {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//             id: <number>, 
+//             userID: <number>,
+//             destinationID: <number>,
+//             travelers: <number>,
+//             date: <string 'YYYY/MM/DD'>,
+//             duration: <number>, 
+//             status: <string 'approved' or 'pending'>,
+//             suggestedActivities: <array of strings>
+//             }),
+//     };
+// }
 
 function buildPage(travelerInfo, tripInfo, destinationInfo) {
   createTravelerProfile(travelerInfo, tripInfo, destinationInfo);
@@ -231,12 +258,37 @@ function createTravelerProfile(travelerInfo, tripInfo, destinationInfo) {
        }
      }
 
-    function setChosenDate() {
-         const datePicker = document.querySelector(".date-picker");
-         chosenDate = datePicker.value.split("-").join("/");
-         console.log(chosenDate)
-         return chosenDate
-     }
+    // function setChosenDate() {
+    //      const datePicker = document.querySelector(".date-picker");
+    //      chosenDate = datePicker.value.split("-").join("/");
+    //      console.log(chosenDate)
+    //      return chosenDate
+    //  }
+
+     function displayEstimatedCosts(event) {
+         event.preventDefault()
+         tripInfo.forEach((trip) => {
+             destinationInfo.forEach(destination => {
+                 trip = new Trip(trip, destinationInfo);
+                 if (destinationsList.value === destination.destination) {
+                    let durationValue = durationInput.value;
+                    let travelersValue = travelersInput.value;
+                  estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(destination, durationValue, travelersValue)}`;
+                 }
+             })
+            })
+        }
+    
+    // let totalLodging = (this.destination.estimatedLodgingCostPerDay * durationInput.value) * travelersInput.value
+    // let totalFlight = (this.destination.estimatedFlightCostPerPerson * travelersInput.value)
+    // let totalTripCost = totalLodging + totalFlight;
+    // let agentFee = totalTripCost * 0.1;
+    // return totalTripCost + agentFee;
+
+            //console.log(durationInput.value)
+            //console.log(travelersInput.value);
+            // console.log(destinationsList.value);
+            // console.log(startDate.value.split("-").join("/"));
 
 
 // function returnHome() {

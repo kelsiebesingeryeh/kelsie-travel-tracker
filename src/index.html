@@ -40,22 +40,23 @@
         <form class="book-trip-form">
           <span class="label-styling">
             <label for="destinations" class="label-names">Choose a Destination</label>
-            <select name="destinations-list" class="destinations-list" id="destinations"></select>
+            <select name="destinations" class="destinations-list" id="destinations" value="destinations"></select>
           </span>
           <span class="label-styling">
-            <label for="travel-start-date" class="label-names">Choose a start date</label>
-            <input type="date" class="date-picker" id="calendar" name="date">
+            <label for="date" class="label-names">Choose a start date</label>
+            <input type="date" class="date-picker" id="date" name="date">
           </span>
           <span class="label-styling">
             <label for="duration" class="label-names">Duration</label>
             <input type="text" name="duration" id="duration" class="duration">
           </span>
           <span class="label-styling">
-            <label for="num-travelers" class="label-names">Number of Travelers</label>
+            <label for="travelers" class="label-names">Number of Travelers</label>
             <input type="text" name="travelers" id="travelers" class="travelers">
           </span>
           <input type="submit" value="Book" id="book-travel-submit" class="book-travel-button">
         </form>
+        <h2 class="estimated-trip-cost"></h2>
         <h2 class="year-cost">Your 2020 yearly trip cost is:</h2>
         <h2 class="all-trips">All Trips</h2>
         <article class="travel-card-container">
