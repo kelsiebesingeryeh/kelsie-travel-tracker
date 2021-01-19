@@ -5,3 +5,8 @@ $slate-grey: #6C757D;
 $hot-pink: #d90368;
 $montserrat-font: 'Montserrat', sans-serif;
 $shadow: 0px 3px 10px 2px $slate-grey;
+
+@mixin flexDisplay($flex, $direction) {
+    display: $flex;
+    flex-direction: $direction;
+}

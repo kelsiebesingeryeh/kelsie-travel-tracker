@@ -56,20 +56,20 @@
           </span>
           <span class="label-styling">
             <label for="date" class="label-names">Choose a start date</label>
-            <input type="date" class="date-picker" id="date" name="date">
+            <input type="date" class="date-picker" id="date" name="date" required>
           </span>
           <span class="label-styling">
             <label for="duration" class="label-names">Duration</label>
-            <input type="number" name="duration" id="duration" class="duration">
+            <input type="number" name="duration" id="duration" class="duration" required>
           </span>
           <span class="label-styling">
             <label for="travelers" class="label-names">Number of Travelers</label>
-            <input type="number" name="travelers" id="travelers" class="travelers">
+            <input type="number" name="travelers" id="travelers" class="travelers" required>
           </span>
-          <input type="submit" value="Calculate Trip Cost" id="calculate-cost-submit" class="calculate-cost-button">
-          <input type="submit" value="Confirm Booking" id="book-travel-submit" class="book-travel-button hidden">
+          <button type="submit" id="calculate-cost-submit" class="calculate-cost-button">Calculate Trip Cost</button>
+          <button type="submit" id="book-travel-submit" class="book-travel-button hidden">Book</button>
         </form>
-        <h2 class="estimated-trip-cost"></h2>
+        <h2 class="estimated-trip-cost year-text"></h2>
         <h2 class="year-cost-2019 year-text"></h2>
         <h2 class="year-cost-2020 year-text"></h2>
       </div>
