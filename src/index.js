@@ -57,8 +57,6 @@ let newTrip;
 let chosenUserID;
 const baseURL = 'http://localhost:3001/api/v1';
 
-//window.onload = getAllData();
-
 pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
@@ -84,11 +82,6 @@ loginSubmitButton.addEventListener('click', () => {
     hide(loginPage);
     show(hamburgerMenu);
     loginUser(event);
-    //getAllData();
-    //userName so you can get the digit
-    //function that gets the numbers from the userName input - parse through the string to get the digits of the number
-    // as you map through the string backwards, looking for numbers - once you have that
-    // callgetAllData - pass the ID into that function
 });
 
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
@@ -98,6 +91,14 @@ function toggleHamburgerMenuDropdown() {
 }
 
 // homeButton.addEventListener("click", returnHome);
+
+function loginUser(event) {
+    event.preventDefault()
+    chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
+    if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
+            getAllData();
+    }
+}
 
 function getAllData() {
   travelerApi = new ApiCall(`${baseURL}/travelers`, "travelers");
@@ -124,19 +125,6 @@ function onLoad() {
     .catch((error) => console.log(error));
 }
 
-function loginUser(event) {
-    event.preventDefault()
-    chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
-    if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
-            getAllData();
-            //console.log('hi')
-            // chosenTraveler = travelerInfo.find((traveler) => parseInt(chosenUserID) === traveler.id).id;
-            // console.log(travelerInfo)
-    }
-    //console.log("defined", chosenTraveler);
-    //return chosenUserID;
-}
-
 function createTravelerProfile(singleInfo, tripInfo,destinationInfo) {
   fillDropdown();
   traveler = new Traveler(singleInfo, tripInfo, destinationInfo);
@@ -147,7 +135,6 @@ function updateNewTripBookings(event) {
     event.preventDefault();
     getAllData(chosenTraveler);
 }
-
 
 function fillDropdown() {
 
@@ -175,7 +162,6 @@ function buildPage(singleInfo, tripInfo, destinationInfo) {
     "2020"
   )}`;
 }
-
 
 function makeNewTrip() {
     let travelerInputValue = parseInt(travelersInput.value);
