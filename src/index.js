@@ -153,6 +153,7 @@ function clearTravelInputs() {
     durationInput.value = "";
     travelersInput.value = "";
     startDate.value = "";
+    destinationsList.selectedIndex = 0;
 }
 
 function buildPage(singleInfo, tripInfo, destinationInfo) {
@@ -372,12 +373,6 @@ function displayEstimatedCosts(event) {
         })
     })
 }
-
-
-//console.log(durationInput.value)
-//console.log(travelersInput.value);
-// console.log(destinationsList.value);
-// console.log(startDate.value.split("-").join("/"));
 
 
 // function returnHome(event) {
