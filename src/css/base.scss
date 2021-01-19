@@ -6,6 +6,9 @@
 body {
   background: $off-white;
   font-family: $montserrat-font;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
 h1 {
@@ -15,46 +18,20 @@ h1 {
   font-weight: bold;
 }
 
-.year-cost {
-  margin-top: 5%;
-}
-
-.book-trip-form {
-  display: flex;
-  justify-content: space-around;
-}
-
-.label-names {
-  display: block;
-  font-size: .65rem;
-  font-weight: bold;
-}
-
-.book-travel-button,
-.calculate-cost-button {
-  background-color: $hot-pink;
-  border: none;
-  border-radius: 5px;
-  color: $off-white;
-  font-family: $montserrat-font;
-  width: 8.5rem;
-}
-
 .user-view {
   margin-top: 5%;
 }
 
-.hidden {
-  display: none;
+.all-trips {
+  margin-left: 2%;
 }
 
-.estimated-trip-cost {
-  color: $hot-pink;
-  text-align: center;
+.plan-trip-area {
+  margin-left: 2%;
 }
 
-.hamburger {
-  display: none;
+.year-cost {
+  margin-top: 5%;
 }
 
 .greeting {
@@ -66,10 +43,99 @@ h1 {
   font-family: $montserrat-font;
 }
 
-.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.label-names {
+  display: block;
+  font-size: .65rem;
+  font-weight: bold;
 }
+
+.book-trip-form {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button {
+  background-color: $hot-pink;
+  border: none;
+  border-radius: 5px;
+  color: $off-white;
+  font-family: $montserrat-font;
+  width: 8.5rem;
+}
+
+.estimated-trip-cost {
+  color: $hot-pink;
+  text-align: center;
+}
+
+.hamburger {
+  display: none;
+}
+
+
+.hidden {
+  display: none;
+}
+
+.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+// IPAD/TABLETS
+
+@media screen and (min-width: 551px) and (max-width: 1024px) {
+  .login-text {
+    font-size: 2rem;
+    margin-top: 21%;
+  }
+
+  .nav-bar {
+    font-size: .65rem;
+  }
+
+  h1,
+  .year-text,
+  .all-trips {
+    font-size: 1.65rem;
+    text-align: center;
+  }
+
+  .book-trip-form {
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .book-travel-button,
+  .calculate-cost-button {
+    margin-top: 5%;
+    padding: 1%;
+  }
+
+  .label-styling {
+    margin-top: 5%;
+    text-align: center;
+  }
+
+  .hamburger {
+    display: none;
+  }
+
+  .info-card {
+    width: 100%;
+  }
+
+  .greeting {
+    margin-top: 0%;
+  }
+
+  .travel-card-container {
+    padding: 0;
+  }
+}
+
+// /SMARTPHONES/MOBILE
 
 @media screen and (max-width: 550px) {
   .login-text {
@@ -84,12 +150,14 @@ h1 {
   }
 
   .book-trip-form {
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
   }
+
   .book-travel-button,
   .calculate-cost-button {
     margin-top: 5%;
+    padding: 2%;
   }
 
   .label-styling {
@@ -103,41 +171,28 @@ h1 {
 
   .hamburger {
     align-items: center;
-    display: flex;
-    flex-direction: column;
+    background-color: $off-white;
     background-image: url('../images/hamburger.png');
     background-repeat: no-repeat;
     background-position: center;
-    height: 60px;
-    width: 60px;
-    background-color: $off-white;
+    @include flexDisplay(flex, column);
+    height: 6.5vh;
+    width: 15.5vw;
     z-index: 2;
-  }
-
-  .hamburger:hover {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
   }
 
   .hamburger-content {
     background-color: $light-grey;
     color: $dark-green;
-    cursor: pointer;
-    margin-left: 28px;
-    margin-top: 61px;
+    margin-left: 30%;
+    margin-top: 75%;
     z-index: 2;
   }
 
   .dropdown-item {
-    border: none;
-    font-size: .80em;
-    line-height: 30px;
-    padding: .35em;
-  }
-
-  .dropdown-item:hover {
-    box-shadow: inset 0px 0px 4px;
+    font-size: .80rem;
+    line-height: 2rem;
+    padding: .35rem;
   }
 
   .info-card {

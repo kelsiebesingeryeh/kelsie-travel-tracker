@@ -91,7 +91,9 @@ currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pendingTrips.addEventListener("click", displayPendingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
+
 calculateTravelButton.addEventListener('click', (event) => {
+    event.preventDefault(event);
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
     show(bookTravelButton);
@@ -364,25 +366,3 @@ function toggleButton(button, input) {
 // .toLocaleString() - adds commas
 // .toLocaleString("en-US", {style: "currency", currency: "USD"})
 
-
-// function displayEstimatedCosts(event) {
-//   event.preventDefault();
-//   tripInfo.forEach((trip) => {
-//     destinationInfo.forEach((destination) => {
-//       trip = new Trip(trip, destinationInfo);
-//       console.log(traveler);
-//       console.log(destinationInfo);
-
-//       // want to match ID from currentTravelerInfo to the tripInfo
-//       if (destinationsList.value === destination.destination) {
-//         let durationValue = durationInput.value;
-//         let travelersValue = travelersInput.value;
-//         estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(
-//           destination,
-//           durationValue,
-//           travelersValue
-//         )}`;
-//       }
-//     });
-//   });
-// }
