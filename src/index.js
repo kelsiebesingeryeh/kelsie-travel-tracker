@@ -6,7 +6,6 @@ import domUpdates from './domUpdates';
 
 // GLOBAL VARIABLES
 
-let chosenTraveler;
 let travelerApi;
 let destinationApi;
 let tripApi;
@@ -15,7 +14,7 @@ let travelerInfo;
 let tripInfo;
 let currentUserInfo;
 let traveler;
-let singleTraveler;
+let currentTraveler;
 let newTrip;
 let chosenUserID;
 const baseURL = 'http://localhost:3001/api/v1';
@@ -23,9 +22,11 @@ const baseURL = 'http://localhost:3001/api/v1';
 // QUERY SELECTORS
 
 const tripsArea = document.querySelector(".travel-card-container");
-const yearCost = document.querySelector(".year-cost");
+const yearCost2020 = document.querySelector(".year-cost-2020");
+const yearCost2019 = document.querySelector(".year-cost-2019");
 const allTripsText = document.querySelector(".all-trips");
 const destinationsList = document.querySelector(".destinations-list");
+const greetUser = document.querySelector('.greeting');
 
 const pendingTrips = document.querySelector(".pending-trips");
 const pendingTripsArea = document.querySelector(".pending-trips-area");
@@ -54,21 +55,28 @@ const durationInput = document.querySelector(".duration");
 const travelersInput = document.querySelector(".travelers");
 const startDate = document.querySelector(".date-picker");
 const estimatedTripCost = document.querySelector(".estimated-trip-cost");
+const usernameInput = document.querySelector(".username");
+const passwordInput = document.querySelector(".password");
+
 const userView = document.querySelector(".user-view");
 const loginPage = document.querySelector(".login-page");
 const navbar = document.querySelector(".nav-bar");
-const usernameInput = document.querySelector(".username");
-const passwordInput = document.querySelector(".password");
 
 const hamburgerMenu = document.querySelector(".hamburger");
 const hamburgerMenuContent = document.querySelector(".hamburger-content");
 
+const mobileCurrentTripsButton = document.querySelector('.current-trips-mobile');
+const mobileUpcomingTripsButton = document.querySelector(".upcoming-trips-mobile");
+const mobilePendingTripsButton = document.querySelector(".pending-trips-mobile");
+const mobilePastTripsButton = document.querySelector(".past-trips-mobile");
+
+
 // EVENT LISTENERS
 
-pendingTrips.addEventListener("click", displayPendingTrips);
-upcomingTrips.addEventListener("click", displayUpcomingTrips);
-pastTrips.addEventListener("click", displayPastTrips);
 currentTrips.addEventListener("click", displayCurrentTrips);
+upcomingTrips.addEventListener("click", displayUpcomingTrips);
+pendingTrips.addEventListener("click", displayPendingTrips);
+pastTrips.addEventListener("click", displayPastTrips);
 calculateTravelButton.addEventListener('click', () => {
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
@@ -93,6 +101,10 @@ loginSubmitButton.addEventListener('click', () => {
 });
 
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
+mobileCurrentTripsButton.addEventListener("click", displayCurrentTrips);
+mobileUpcomingTripsButton.addEventListener("click", displayUpcomingTrips);
+mobilePendingTripsButton.addEventListener("click", displayPendingTrips);
+mobilePastTripsButton.addEventListener("click", displayPastTrips);
 
 function toggleHamburgerMenuDropdown() {
     hamburgerMenuContent.classList.toggle('hidden');
@@ -112,7 +124,7 @@ function getAllData() {
     travelerApi = new ApiCall(`${baseURL}/travelers`, "travelers");
     destinationApi = new ApiCall(`${baseURL}/destinations`, "destinations");
     tripApi = new ApiCall(`${baseURL}/trips`, "trips");
-    singleTraveler = new ApiCall(`${baseURL}/travelers/${chosenUserID}`);
+    currentTraveler = new ApiCall(`${baseURL}/travelers/${chosenUserID}`);
     onLoad();
 }
 
@@ -120,7 +132,7 @@ function onLoad() {
     let travelerData = travelerApi.getRequest();
     let destinationData = destinationApi.getRequest();
     let tripData = tripApi.getRequest();
-    let singleData = singleTraveler.getSingleRequest();
+    let singleData = currentTraveler.getSingleRequest();
 
     return Promise.all([travelerData, destinationData, tripData, singleData])
         .then((data) => {
@@ -128,19 +140,15 @@ function onLoad() {
             destinationInfo = data[1];
             tripInfo = data[2];
             currentUserInfo = data[3];
-            buildPage(currentUserInfo, tripInfo, destinationInfo, travelerInfo);
+            buildPage(currentUserInfo, tripInfo, destinationInfo);
         })
         .catch((error) => console.log(error));
 }
 
-function createTravelerProfile(currentUserInfo, tripInfo, destinationInfo) {
-    fillDropdown();
-    traveler = new Traveler(currentUserInfo, tripInfo, destinationInfo);
-}
 
 function updateNewTripBookings(event) {
     event.preventDefault();
-    getAllData(chosenTraveler);
+    getAllData(chosenUserID);
 }
 
 function fillDropdown() {
@@ -165,7 +173,14 @@ function clearTravelInputs() {
 function buildPage(currentUserInfo, tripInfo, destinationInfo) {
     createTravelerProfile(currentUserInfo, tripInfo, destinationInfo);
     domUpdates.displayTrips(traveler, tripsArea);
-    yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
+    yearCost2019.innerText = `Your 2019 trip cost is: $${traveler.calculateTotalSpent("2019")}`;
+    yearCost2020.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
+}
+
+function createTravelerProfile(currentUserInfo, tripInfo, destinationInfo) {
+    greetUser.innerText = `Hello, ${currentUserInfo.name}!`
+    traveler = new Traveler(currentUserInfo, tripInfo, destinationInfo);
+    fillDropdown();
 }
 
 function makeNewTrip() {
@@ -236,12 +251,13 @@ function displayPendingTrips() {
     let pendingTripsList = traveler.getPendingTrips();
     domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "pending");
     hide(tripsArea);
-    show(pendingTripsArea);
     hide(upcomingTripsArea);
+    show(pendingTripsArea);
     hide(pastTripsArea);
-    hide(allTripsText);
-    hide(yearCost);
     hide(currentTripsArea);
+    hide(allTripsText);
+    hide(yearCost2020);
+    hide(yearCost2019);
 }
 
 function displayUpcomingTrips() {
@@ -257,9 +273,10 @@ function displayUpcomingTrips() {
     show(upcomingTripsArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
-    hide(allTripsText);
-    hide(yearCost);
     hide(currentTripsArea);
+    hide(allTripsText);
+    hide(yearCost2020);
+    hide(yearCost2019);
 }
 
 function displayPastTrips() {
@@ -272,12 +289,13 @@ function displayPastTrips() {
         "Previous"
     );
     hide(tripsArea);
-    show(pastTripsArea);
     hide(pendingTripsArea);
+    show(pastTripsArea);
     hide(upcomingTripsArea);
-    hide(allTripsText);
-    hide(yearCost);
     hide(currentTripsArea);
+    hide(allTripsText);
+    hide(yearCost2020);
+    hide(yearCost2019);
 }
 
 function displayCurrentTrips() {
@@ -289,24 +307,31 @@ function displayCurrentTrips() {
         currentTripsText,
         "Current"
     );
+    //currentTripsArea.toggle('hidden');
     hide(tripsArea);
-    show(currentTripsArea)
-    hide(upcomingTripsArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
+    hide(upcomingTripsArea);
+    show(currentTripsArea);
     hide(allTripsText);
-    hide(yearCost);
+    hide(yearCost2020);
+    hide(yearCost2019);
 }
 
-function returnHome(event) {
-console.log('hi')
- show(userView);
- getAllData();
- hide(currentTripsArea);
- hide(pendingTripsArea);
- hide(upcomingTripsArea);
- hide(pastTripsArea);
-}
+// function returnHome() {
+//     domUpdates.displayTrips(traveler, tripsArea);
+//     show(yearCost2020);
+//     show(yearCost2019);
+// //   hide(loginPage);
+// //    show(userView);
+// //console.log('hi')
+// //domUpdates.displayTrips(traveler, tripsArea);
+// //  show(userView);
+// //  hide(currentTripsArea);
+// //  hide(pendingTripsArea);
+// //  hide(upcomingTripsArea);
+// //  hide(pastTripsArea);
+// }
 
 // .toLocaleString() - adds commas
 // .toLocaleString("en-US", {style: "currency", currency: "USD"})
