@@ -66,6 +66,11 @@ h1 {
   font-family: $montserrat-font;
 }
 
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 550px) {
   .login-text {
     margin-top: 35%;

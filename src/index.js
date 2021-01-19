@@ -63,21 +63,34 @@ const mobileUpcomingTripsButton = document.querySelector(".upcoming-trips-mobile
 const mobilePendingTripsButton = document.querySelector(".pending-trips-mobile");
 const mobilePastTripsButton = document.querySelector(".past-trips-mobile");
 
+const usernameInput = document.querySelector(".username");
+const passwordInput = document.querySelector(".password");
 
 // EVENT LISTENERS
+usernameInput.addEventListener('keyup', () => {
+    if (passwordInput.value !== '') {
+        toggleButton(loginSubmitButton, usernameInput);
+    }
+})
+
+passwordInput.addEventListener("keyup", () => {
+    if (usernameInput.value !== "") {
+        toggleButton(loginSubmitButton, passwordInput);
+    }
+});
 
 currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pendingTrips.addEventListener("click", displayPendingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
-calculateTravelButton.addEventListener('click', () => {
+calculateTravelButton.addEventListener('click', (event) => {
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
     show(bookTravelButton);
     submitTripRequest();
 })
 
-bookTravelButton.addEventListener("click", () => {
+bookTravelButton.addEventListener("click", (event) => {
     hide(bookTravelButton);
     show(calculateTravelButton);
     hide(estimatedTripCost);
@@ -85,7 +98,7 @@ bookTravelButton.addEventListener("click", () => {
     clearTravelInputs();
 });
 
-loginSubmitButton.addEventListener('click', () => {
+loginSubmitButton.addEventListener('click', (event) => {
     show(userView);
     show(navbar);
     hide(loginPage);
@@ -107,12 +120,20 @@ homeButton.addEventListener("click", returnHome);
 
 function loginUser(event) {
     event.preventDefault();
-    const usernameInput = document.querySelector(".username");
-    const passwordInput = document.querySelector(".password");
     chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
     if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
         getAllData();
+    } else {
+        hide(userView);
+        show(loginPage);
+        hide(navbar);
+        displayErrorMessage('You have entered the wrong username or password!');
     }
+}
+
+function displayErrorMessage(message) {
+    const messages = document.querySelector('.message');
+    messages.innerText = message
 }
 
 function getAllData() {
@@ -147,7 +168,7 @@ function updateNewTripBookings(event) {
 }
 
 function fillDropdown() {
-    
+
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
             return -1
@@ -233,15 +254,15 @@ function hide(element) {
 
 function displayEstimatedCosts(event) {
     event.preventDefault()
-        destinationInfo.forEach(destination => {
-            if (destinationsList.value === destination.destination) {
-                trip = new Trip(tripInfo, destination);
-                console.log('tripInfo', tripInfo)
-                let durationValue = durationInput.value;
-                let travelersValue = travelersInput.value;
-                estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
-            }
-        })
+    destinationInfo.forEach(destination => {
+        if (destinationsList.value === destination.destination) {
+            trip = new Trip(tripInfo, destination);
+            console.log('tripInfo', tripInfo)
+            let durationValue = durationInput.value;
+            let travelersValue = travelersInput.value;
+            estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
+        }
+    })
 }
 
 function displayPendingTrips() {
@@ -329,6 +350,16 @@ function returnHome() {
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
+}
+
+function toggleButton(button, input) {
+    if (input.value === '') {
+        button.disabled = true;
+        button.classList.add('disabled');
+    } else {
+        button.disabled = false;
+        button.classList.remove('disabled');
+    }
 }
 
 // .toLocaleString() - adds commas
