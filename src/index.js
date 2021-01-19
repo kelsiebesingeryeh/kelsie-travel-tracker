@@ -147,12 +147,14 @@ function updateNewTripBookings(event) {
 }
 
 function fillDropdown() {
+    
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
             return -1
         }
     })
     sortedDestinations.forEach((destination) => {
+        destinationsList.insertAdjacentHTML("beforeend", '');
         let destinationsOptions = `<option>${destination.destination}</option>`;
         destinationsList.insertAdjacentHTML("beforeend", destinationsOptions);
     });
