@@ -50,6 +50,7 @@ const durationInput = document.querySelector(".duration");
 const travelersInput = document.querySelector(".travelers");
 const startDate = document.querySelector(".date-picker");
 const estimatedTripCost = document.querySelector(".estimated-trip-cost");
+const bookTripForm = document.querySelector(".book-trip-form");
 
 const userView = document.querySelector(".user-view");
 const loginPage = document.querySelector(".login-page");
@@ -58,6 +59,7 @@ const navbar = document.querySelector(".nav-bar");
 const hamburgerMenu = document.querySelector(".hamburger");
 const hamburgerMenuContent = document.querySelector(".hamburger-content");
 
+const mobileHomeButton = document.querySelector('.home-mobile');
 const mobileCurrentTripsButton = document.querySelector('.current-trips-mobile');
 const mobileUpcomingTripsButton = document.querySelector(".upcoming-trips-mobile");
 const mobilePendingTripsButton = document.querySelector(".pending-trips-mobile");
@@ -79,7 +81,11 @@ passwordInput.addEventListener("keyup", () => {
     }
 });
 
-
+bookTripForm.addEventListener('keyUp', () => {
+    if (durationInput.value === "" && startDate.value === "" && travelersInput.value === "") {
+        loginSubmitButton.disable = true;
+    }
+} )
 
 currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
@@ -108,6 +114,7 @@ loginSubmitButton.addEventListener('click', (event) => {
     loginUser(event);
 });
 
+mobileHomeButton.addEventListener('click', returnHome)
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
 mobileCurrentTripsButton.addEventListener("click", displayCurrentTrips);
 mobileUpcomingTripsButton.addEventListener("click", displayUpcomingTrips);
@@ -270,7 +277,7 @@ function displayEstimatedCosts(event) {
 function displayPendingTrips() {
     const pendingTripsText = document.querySelector(".pending-trips-text");
     let pendingTripsList = traveler.getPendingTrips();
-    domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "pending");
+    domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "Pending");
     hide(tripsArea);
     hide(planTripArea);
     hide(upcomingTripsArea);
@@ -335,9 +342,7 @@ function displayCurrentTrips() {
 
 function returnHome() {
     domUpdates.displayTrips(traveler, tripsArea);
-    show(yearCost2020);
-    show(yearCost2019);
-    show(allTripsText);
+    allTripsText.innerHTML = "All Trips";
     show(tripsArea);
     show(planTripArea);
     hide(pendingTripsArea);
