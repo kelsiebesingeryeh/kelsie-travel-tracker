@@ -27,7 +27,7 @@ const yearCost2020 = document.querySelector(".year-cost-2020");
 const yearCost2019 = document.querySelector(".year-cost-2019");
 const allTripsText = document.querySelector(".all-trips");
 const destinationsList = document.querySelector(".destinations-list");
-
+const planTripArea = document.querySelector(".plan-trip-area");
 
 const pendingTrips = document.querySelector(".pending-trips");
 const pendingTripsArea = document.querySelector(".pending-trips-area");
@@ -272,13 +272,11 @@ function displayPendingTrips() {
     let pendingTripsList = traveler.getPendingTrips();
     domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "pending");
     hide(tripsArea);
+    hide(planTripArea);
     hide(upcomingTripsArea);
     show(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayUpcomingTrips() {
@@ -292,13 +290,11 @@ function displayUpcomingTrips() {
         "Upcoming"
     );
     hide(tripsArea);
+    hide(planTripArea);
     show(upcomingTripsArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayPastTrips() {
@@ -312,13 +308,11 @@ function displayPastTrips() {
         "Previous"
     );
     hide(tripsArea);
+    hide(planTripArea);
     hide(pendingTripsArea);
     show(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayCurrentTrips() {
@@ -331,15 +325,12 @@ function displayCurrentTrips() {
         currentTripsText,
         "Current"
     );
-    //currentTripsArea.toggle('hidden');
     hide(tripsArea);
+    hide(planTripArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     show(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function returnHome() {
@@ -348,6 +339,7 @@ function returnHome() {
     show(yearCost2019);
     show(allTripsText);
     show(tripsArea);
+    show(planTripArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(upcomingTripsArea);
