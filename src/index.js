@@ -79,6 +79,8 @@ passwordInput.addEventListener("keyup", () => {
     }
 });
 
+
+
 currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pendingTrips.addEventListener("click", displayPendingTrips);
