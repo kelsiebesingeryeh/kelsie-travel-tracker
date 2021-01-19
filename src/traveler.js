@@ -38,7 +38,8 @@ class Traveler {
     let agentFee;
     let totalTripCost = this.trips.reduce((total, value) => {
       if (value.date.includes(year)) {
-        totalLodging = value.destination.estimatedLodgingCostPerDay * value.duration
+        totalLodging =
+          value.destination.estimatedLodgingCostPerDay * value.duration;
         totalFlight = value.destination.estimatedFlightCostPerPerson;
         total += totalLodging + totalFlight;
       }
@@ -69,7 +70,7 @@ class Traveler {
     return this.trips.reduce((total, value) => {
       let today = new Date();
       let endDate = new Date(value.date);
-      endDate.setDate(endDate.getDate() + value.duration)
+      endDate.setDate(endDate.getDate() + value.duration);
       if (endDate < today) {
         total.push(value);
       }
@@ -91,12 +92,3 @@ class Traveler {
 }
 
 export default Traveler;
-
-
-
-// function updateDate(event) {
-//   today = new Date(event.target.value).toDateString();
-//   hotel.date = today;
-//   hotel.userDirectory.currentUser.bookingService.sortBookingsByDate(today);
-//   displayAvailableRooms();
-// }

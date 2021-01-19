@@ -16,6 +16,7 @@ let currentUserInfo;
 let traveler;
 let currentTraveler;
 let newTrip;
+let trip;
 let chosenUserID;
 const baseURL = 'http://localhost:3001/api/v1';
 
@@ -26,25 +27,19 @@ const yearCost2020 = document.querySelector(".year-cost-2020");
 const yearCost2019 = document.querySelector(".year-cost-2019");
 const allTripsText = document.querySelector(".all-trips");
 const destinationsList = document.querySelector(".destinations-list");
-const greetUser = document.querySelector('.greeting');
+
 
 const pendingTrips = document.querySelector(".pending-trips");
 const pendingTripsArea = document.querySelector(".pending-trips-area");
-const pendingTripsText = document.querySelector(".pending-trips-text");
-
 
 const upcomingTrips = document.querySelector(".upcoming-trips");
 const upcomingTripsArea = document.querySelector(".upcoming-trips-area");
-const upcomingTripsText = document.querySelector(".upcoming-trips-text");
 
 const pastTrips = document.querySelector(".past-trips");
 const pastTripsArea = document.querySelector(".past-trips-area");
-const pastTripsText = document.querySelector(".past-trips-text");
 
 const currentTrips = document.querySelector(".current-trips");
 const currentTripsArea = document.querySelector(".current-trips-area");
-const currentTripsText = document.querySelector(".current-trips-text");
-
 
 const homeButton = document.querySelector(".home");
 const bookTravelButton = document.querySelector(".book-travel-button");
@@ -55,8 +50,6 @@ const durationInput = document.querySelector(".duration");
 const travelersInput = document.querySelector(".travelers");
 const startDate = document.querySelector(".date-picker");
 const estimatedTripCost = document.querySelector(".estimated-trip-cost");
-const usernameInput = document.querySelector(".username");
-const passwordInput = document.querySelector(".password");
 
 const userView = document.querySelector(".user-view");
 const loginPage = document.querySelector(".login-page");
@@ -113,7 +106,9 @@ function toggleHamburgerMenuDropdown() {
 homeButton.addEventListener("click", returnHome);
 
 function loginUser(event) {
-    event.preventDefault()
+    event.preventDefault();
+    const usernameInput = document.querySelector(".username");
+    const passwordInput = document.querySelector(".password");
     chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
     if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
         getAllData();
@@ -178,6 +173,7 @@ function buildPage(currentUserInfo, tripInfo, destinationInfo) {
 }
 
 function createTravelerProfile(currentUserInfo, tripInfo, destinationInfo) {
+    const greetUser = document.querySelector(".greeting");
     greetUser.innerText = `Hello, ${currentUserInfo.name}!`
     traveler = new Traveler(currentUserInfo, tripInfo, destinationInfo);
     fillDropdown();
@@ -235,19 +231,19 @@ function hide(element) {
 
 function displayEstimatedCosts(event) {
     event.preventDefault()
-    tripInfo.forEach((trip) => {
         destinationInfo.forEach(destination => {
-            trip = new Trip(trip, destinationInfo);
             if (destinationsList.value === destination.destination) {
+                trip = new Trip(tripInfo, destination);
+                console.log('tripInfo', tripInfo)
                 let durationValue = durationInput.value;
                 let travelersValue = travelersInput.value;
-                estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(destination, durationValue, travelersValue)}`;
+                estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
             }
         })
-    })
 }
 
 function displayPendingTrips() {
+    const pendingTripsText = document.querySelector(".pending-trips-text");
     let pendingTripsList = traveler.getPendingTrips();
     domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "pending");
     hide(tripsArea);
@@ -261,6 +257,7 @@ function displayPendingTrips() {
 }
 
 function displayUpcomingTrips() {
+    const upcomingTripsText = document.querySelector(".upcoming-trips-text");
     let upcomingTripsList = traveler.getUpcomingTrips();
     domUpdates.displayOtherTrips(
         upcomingTripsList,
@@ -280,6 +277,7 @@ function displayUpcomingTrips() {
 }
 
 function displayPastTrips() {
+    const pastTripsText = document.querySelector(".past-trips-text");
     let pastTripsList = traveler.getPastTrips();
     domUpdates.displayOtherTrips(
         pastTripsList,
@@ -299,6 +297,7 @@ function displayPastTrips() {
 }
 
 function displayCurrentTrips() {
+    const currentTripsText = document.querySelector(".current-trips-text");
     let currentTripsList = traveler.getCurrentTrips();
     domUpdates.displayOtherTrips(
         currentTripsList,
@@ -318,20 +317,40 @@ function displayCurrentTrips() {
     hide(yearCost2019);
 }
 
-// function returnHome() {
-//     domUpdates.displayTrips(traveler, tripsArea);
-//     show(yearCost2020);
-//     show(yearCost2019);
-// //   hide(loginPage);
-// //    show(userView);
-// //console.log('hi')
-// //domUpdates.displayTrips(traveler, tripsArea);
-// //  show(userView);
-// //  hide(currentTripsArea);
-// //  hide(pendingTripsArea);
-// //  hide(upcomingTripsArea);
-// //  hide(pastTripsArea);
-// }
+function returnHome() {
+    domUpdates.displayTrips(traveler, tripsArea);
+    show(yearCost2020);
+    show(yearCost2019);
+    show(allTripsText);
+    show(tripsArea);
+    hide(pendingTripsArea);
+    hide(pastTripsArea);
+    hide(upcomingTripsArea);
+    hide(currentTripsArea);
+}
 
 // .toLocaleString() - adds commas
 // .toLocaleString("en-US", {style: "currency", currency: "USD"})
+
+
+// function displayEstimatedCosts(event) {
+//   event.preventDefault();
+//   tripInfo.forEach((trip) => {
+//     destinationInfo.forEach((destination) => {
+//       trip = new Trip(trip, destinationInfo);
+//       console.log(traveler);
+//       console.log(destinationInfo);
+
+//       // want to match ID from currentTravelerInfo to the tripInfo
+//       if (destinationsList.value === destination.destination) {
+//         let durationValue = durationInput.value;
+//         let travelersValue = travelersInput.value;
+//         estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(
+//           destination,
+//           durationValue,
+//           travelersValue
+//         )}`;
+//       }
+//     });
+//   });
+// }
