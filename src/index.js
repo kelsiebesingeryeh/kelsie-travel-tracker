@@ -36,11 +36,13 @@ let loginSubmitButton = document.querySelector(".submit-button");
 let userView = document.querySelector(".user-view");
 let loginPage = document.querySelector(".login-page");
 let navbar = document.querySelector(".nav-bar");
+let usernameInput = document.querySelector('.username');
+let passwordInput = document.querySelector('.password');
 
 let hamburgerMenu = document.querySelector(".hamburger");
 let hamburgerMenuContent = document.querySelector(".hamburger-content");
 
-
+let chosenTraveler;
 let travelerApi;
 let destinationApi;
 let tripApi;
@@ -52,9 +54,10 @@ let traveler;
 let trip;
 let singleTraveler;
 let newTrip;
+let chosenUserID;
 const baseURL = 'http://localhost:3001/api/v1';
 
-window.onload = getAllData();
+//window.onload = getAllData();
 
 pendingTrips.addEventListener("click", displayPendingTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
@@ -80,7 +83,8 @@ loginSubmitButton.addEventListener('click', () => {
     show(navbar);
     hide(loginPage);
     show(hamburgerMenu);
-    getAllData();
+    loginUser(event);
+    //getAllData();
     //userName so you can get the digit
     //function that gets the numbers from the userName input - parse through the string to get the digits of the number
     // as you map through the string backwards, looking for numbers - once you have that
@@ -95,35 +99,55 @@ function toggleHamburgerMenuDropdown() {
 
 // homeButton.addEventListener("click", returnHome);
 
-function getAllData(id = 21) {
-    travelerApi = new ApiCall(`${baseURL}/travelers`, "travelers");
-    destinationApi = new ApiCall(`${baseURL}/destinations`, 'destinations');
-    tripApi = new ApiCall(`${baseURL}/trips`, "trips");
-    singleTraveler = new ApiCall(`${baseURL}/travelers/${id}`);
-    onLoad(id);
+function getAllData() {
+  travelerApi = new ApiCall(`${baseURL}/travelers`, "travelers");
+  destinationApi = new ApiCall(`${baseURL}/destinations`, "destinations");
+  tripApi = new ApiCall(`${baseURL}/trips`, "trips");
+  singleTraveler = new ApiCall(`${baseURL}/travelers/${chosenUserID}`);
+  onLoad();
 }
 
-function onLoad(id) {
-    let travelerData = travelerApi.getRequest();
-    let destinationData = destinationApi.getRequest();
-    let tripData = tripApi.getRequest();
-    let singleData = singleTraveler.getSingleRequest(id);
-    
-    return Promise.all([travelerData, destinationData, tripData, singleData])
-    .then(data => {
-        travelerInfo = data[0];
-        destinationInfo = data[1];
-        tripInfo = data[2];
-        singleInfo = data[3];
-        buildPage(singleInfo, tripInfo, destinationInfo);
+function onLoad() {
+  let travelerData = travelerApi.getRequest();
+  let destinationData = destinationApi.getRequest();
+  let tripData = tripApi.getRequest();
+  let singleData = singleTraveler.getSingleRequest();
+
+  return Promise.all([travelerData, destinationData, tripData, singleData])
+    .then((data) => {
+      travelerInfo = data[0];
+      destinationInfo = data[1];
+      tripInfo = data[2];
+      singleInfo = data[3];
+      buildPage(singleInfo, tripInfo, destinationInfo, travelerInfo);
     })
-        .catch(error => console.log(error))
+    .catch((error) => console.log(error));
+}
+
+function loginUser(event) {
+    event.preventDefault()
+    chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
+    if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
+            getAllData();
+            //console.log('hi')
+            // chosenTraveler = travelerInfo.find((traveler) => parseInt(chosenUserID) === traveler.id).id;
+            // console.log(travelerInfo)
+    }
+    //console.log("defined", chosenTraveler);
+    //return chosenUserID;
+}
+
+function createTravelerProfile(singleInfo, tripInfo,destinationInfo) {
+  fillDropdown();
+  traveler = new Traveler(singleInfo, tripInfo, destinationInfo);
+  console.log('user', singleInfo);
 }
 
 function updateNewTripBookings(event) {
     event.preventDefault();
-    getAllData();
+    getAllData(chosenTraveler);
 }
+
 
 function fillDropdown() {
 
@@ -145,15 +169,13 @@ function clearTravelInputs() {
 }
 
 function buildPage(singleInfo, tripInfo, destinationInfo) {
-    createTravelerProfile(singleInfo, tripInfo, destinationInfo);
-    displayTrips(traveler);
-    yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
+  createTravelerProfile(singleInfo, tripInfo, destinationInfo);
+  displayTrips(traveler);
+  yearCost.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent(
+    "2020"
+  )}`;
 }
 
-function createTravelerProfile(singleInfo, tripInfo, destinationInfo) {
-  fillDropdown();
-  traveler = new Traveler(singleInfo, tripInfo, destinationInfo);
-}
 
 function makeNewTrip() {
     let travelerInputValue = parseInt(travelersInput.value);
