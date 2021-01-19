@@ -66,6 +66,11 @@ h1 {
   font-family: $montserrat-font;
 }
 
+.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media screen and (max-width: 550px) {
   .login-text {
     margin-top: 35%;
@@ -121,6 +126,7 @@ h1 {
     cursor: pointer;
     margin-left: 28px;
     margin-top: 61px;
+    z-index: 2;
   }
 
   .dropdown-item {

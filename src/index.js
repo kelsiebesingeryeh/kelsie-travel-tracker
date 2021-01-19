@@ -27,7 +27,7 @@ const yearCost2020 = document.querySelector(".year-cost-2020");
 const yearCost2019 = document.querySelector(".year-cost-2019");
 const allTripsText = document.querySelector(".all-trips");
 const destinationsList = document.querySelector(".destinations-list");
-
+const planTripArea = document.querySelector(".plan-trip-area");
 
 const pendingTrips = document.querySelector(".pending-trips");
 const pendingTripsArea = document.querySelector(".pending-trips-area");
@@ -50,6 +50,7 @@ const durationInput = document.querySelector(".duration");
 const travelersInput = document.querySelector(".travelers");
 const startDate = document.querySelector(".date-picker");
 const estimatedTripCost = document.querySelector(".estimated-trip-cost");
+const bookTripForm = document.querySelector(".book-trip-form");
 
 const userView = document.querySelector(".user-view");
 const loginPage = document.querySelector(".login-page");
@@ -58,26 +59,46 @@ const navbar = document.querySelector(".nav-bar");
 const hamburgerMenu = document.querySelector(".hamburger");
 const hamburgerMenuContent = document.querySelector(".hamburger-content");
 
+const mobileHomeButton = document.querySelector('.home-mobile');
 const mobileCurrentTripsButton = document.querySelector('.current-trips-mobile');
 const mobileUpcomingTripsButton = document.querySelector(".upcoming-trips-mobile");
 const mobilePendingTripsButton = document.querySelector(".pending-trips-mobile");
 const mobilePastTripsButton = document.querySelector(".past-trips-mobile");
 
+const usernameInput = document.querySelector(".username");
+const passwordInput = document.querySelector(".password");
 
 // EVENT LISTENERS
+usernameInput.addEventListener('keyup', () => {
+    if (passwordInput.value !== '') {
+        toggleButton(loginSubmitButton, usernameInput);
+    }
+})
+
+passwordInput.addEventListener("keyup", () => {
+    if (usernameInput.value !== "") {
+        toggleButton(loginSubmitButton, passwordInput);
+    }
+});
+
+bookTripForm.addEventListener('keyUp', () => {
+    if (durationInput.value === "" && startDate.value === "" && travelersInput.value === "") {
+        loginSubmitButton.disable = true;
+    }
+} )
 
 currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pendingTrips.addEventListener("click", displayPendingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
-calculateTravelButton.addEventListener('click', () => {
+calculateTravelButton.addEventListener('click', (event) => {
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
     show(bookTravelButton);
     submitTripRequest();
 })
 
-bookTravelButton.addEventListener("click", () => {
+bookTravelButton.addEventListener("click", (event) => {
     hide(bookTravelButton);
     show(calculateTravelButton);
     hide(estimatedTripCost);
@@ -85,7 +106,7 @@ bookTravelButton.addEventListener("click", () => {
     clearTravelInputs();
 });
 
-loginSubmitButton.addEventListener('click', () => {
+loginSubmitButton.addEventListener('click', (event) => {
     show(userView);
     show(navbar);
     hide(loginPage);
@@ -93,6 +114,7 @@ loginSubmitButton.addEventListener('click', () => {
     loginUser(event);
 });
 
+mobileHomeButton.addEventListener('click', returnHome)
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
 mobileCurrentTripsButton.addEventListener("click", displayCurrentTrips);
 mobileUpcomingTripsButton.addEventListener("click", displayUpcomingTrips);
@@ -107,12 +129,20 @@ homeButton.addEventListener("click", returnHome);
 
 function loginUser(event) {
     event.preventDefault();
-    const usernameInput = document.querySelector(".username");
-    const passwordInput = document.querySelector(".password");
     chosenUserID = usernameInput.value.split("").splice(8, 3).join("");
     if (usernameInput.value.slice(0, 8) === "traveler" && usernameInput.value.slice(8) > 0 && usernameInput.value.slice(8) <= 50 && passwordInput.value === 'traveler2020') {
         getAllData();
+    } else {
+        hide(userView);
+        show(loginPage);
+        hide(navbar);
+        displayErrorMessage('You have entered the wrong username or password!');
     }
+}
+
+function displayErrorMessage(message) {
+    const messages = document.querySelector('.message');
+    messages.innerText = message
 }
 
 function getAllData() {
@@ -147,7 +177,7 @@ function updateNewTripBookings(event) {
 }
 
 function fillDropdown() {
-    
+
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
             return -1
@@ -233,29 +263,27 @@ function hide(element) {
 
 function displayEstimatedCosts(event) {
     event.preventDefault()
-        destinationInfo.forEach(destination => {
-            if (destinationsList.value === destination.destination) {
-                trip = new Trip(tripInfo, destination);
-                console.log('tripInfo', tripInfo)
-                let durationValue = durationInput.value;
-                let travelersValue = travelersInput.value;
-                estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
-            }
-        })
+    destinationInfo.forEach(destination => {
+        if (destinationsList.value === destination.destination) {
+            trip = new Trip(tripInfo, destination);
+            console.log('tripInfo', tripInfo)
+            let durationValue = durationInput.value;
+            let travelersValue = travelersInput.value;
+            estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
+        }
+    })
 }
 
 function displayPendingTrips() {
     const pendingTripsText = document.querySelector(".pending-trips-text");
     let pendingTripsList = traveler.getPendingTrips();
-    domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "pending");
+    domUpdates.displayOtherTrips(pendingTripsList, pendingTripsArea, 'pendingHTML', pendingTripsText, "Pending");
     hide(tripsArea);
+    hide(planTripArea);
     hide(upcomingTripsArea);
     show(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayUpcomingTrips() {
@@ -269,13 +297,11 @@ function displayUpcomingTrips() {
         "Upcoming"
     );
     hide(tripsArea);
+    hide(planTripArea);
     show(upcomingTripsArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayPastTrips() {
@@ -289,13 +315,11 @@ function displayPastTrips() {
         "Previous"
     );
     hide(tripsArea);
+    hide(planTripArea);
     hide(pendingTripsArea);
     show(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function displayCurrentTrips() {
@@ -308,27 +332,33 @@ function displayCurrentTrips() {
         currentTripsText,
         "Current"
     );
-    //currentTripsArea.toggle('hidden');
     hide(tripsArea);
+    hide(planTripArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     show(currentTripsArea);
-    hide(allTripsText);
-    hide(yearCost2020);
-    hide(yearCost2019);
 }
 
 function returnHome() {
     domUpdates.displayTrips(traveler, tripsArea);
-    show(yearCost2020);
-    show(yearCost2019);
-    show(allTripsText);
+    allTripsText.innerHTML = "All Trips";
     show(tripsArea);
+    show(planTripArea);
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
+}
+
+function toggleButton(button, input) {
+    if (input.value === '') {
+        button.disabled = true;
+        button.classList.add('disabled');
+    } else {
+        button.disabled = false;
+        button.classList.remove('disabled');
+    }
 }
 
 // .toLocaleString() - adds commas

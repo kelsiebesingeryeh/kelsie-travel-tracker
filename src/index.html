@@ -37,14 +37,16 @@
           <div class="login-container">
             <form id="login-form" class="login-form">
               <label for="username" class="label-names">Username</label>
-              <input type="text" name="username" id="username" class="username login-form-field" placeholder="Username">
+              <input type="text" name="username" id="username" class="username login-form-field" placeholder="Username" required>
               <label for="password" class="label-names">Password</label>
-              <input type="password" name="password" id="password-field" class="password login-form-field" placeholder="Password">
-              <input type="submit" value="Submit" id="login-form-submit" class="submit-button">
+              <input type="password" name="password" id="password-field" class="password login-form-field" placeholder="Password" required>
+              <input type="submit" value="Submit" id="login-form-submit" class="submit-button disabled" disabled>
             </form>
+            <p class="message"></p>
           </div>
       </section>
       <section class="user-view hidden">
+        <div class="plan-trip-area">
         <h1 class="greeting"></h1>
         <h1>Plan your next trip here!</h1>
         <form class="book-trip-form">
@@ -58,11 +60,11 @@
           </span>
           <span class="label-styling">
             <label for="duration" class="label-names">Duration</label>
-            <input type="text" name="duration" id="duration" class="duration">
+            <input type="number" name="duration" id="duration" class="duration">
           </span>
           <span class="label-styling">
             <label for="travelers" class="label-names">Number of Travelers</label>
-            <input type="text" name="travelers" id="travelers" class="travelers">
+            <input type="number" name="travelers" id="travelers" class="travelers">
           </span>
           <input type="submit" value="Calculate Trip Cost" id="calculate-cost-submit" class="calculate-cost-button">
           <input type="submit" value="Confirm Booking" id="book-travel-submit" class="book-travel-button hidden">
@@ -70,7 +72,8 @@
         <h2 class="estimated-trip-cost"></h2>
         <h2 class="year-cost-2019 year-text"></h2>
         <h2 class="year-cost-2020 year-text"></h2>
-        <h2 class="all-trips">All Trips</h2>
+      </div>
+      <h2 class="all-trips">All Trips</h2>
         <article class="travel-card-container card">
         </article>
       </section>
