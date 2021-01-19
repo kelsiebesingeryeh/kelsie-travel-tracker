@@ -84,8 +84,8 @@ describe("Trip", () => {
         );
     });
 
-    it("Should calculate an estimated trip cost", () => {
-        expect(trip1.calculateEstimatedTripCost()).to.eql(3355);
-    });
+     it("Should calculate an estimated trip cost", () => {
+       expect(trip1.calculateEstimatedTripCost(16, 1)).to.eql(3355);
+     });
 
 });
