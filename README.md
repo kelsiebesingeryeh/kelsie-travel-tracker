@@ -66,7 +66,7 @@ A user can add trips to their trips list by filling out the form on the home pag
 
 Once they user sees the estimated cost, they can click the "Book" button and their trip will appear on page load and also in their upcoming/current trips list and in their pending trips list. 
 
-![demo-mobile](https://media.giphy.com/media/sVtSxMHVxlNv9lwWPW/giphy.gif)
+![demo-mobile-view](https://media.giphy.com/media/sVtSxMHVxlNv9lwWPW/giphy.gif)
 
 ### Navigation bar
 A user can click on any of the items in the navigation bar to filter their trips by type - current, upcoming, pending and past.
