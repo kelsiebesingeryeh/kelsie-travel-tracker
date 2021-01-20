@@ -179,8 +179,8 @@ function buildPage(currentUserInfo, tripInfo, destinationInfo) {
     const yearCost2019 = document.querySelector(".year-cost-2019");
     createTravelerProfile(currentUserInfo, tripInfo, destinationInfo);
     domUpdates.displayTrips(traveler, tripsArea);
-    yearCost2019.innerText = `Your 2020 trip cost is: $${traveler.calculateTotalSpent("2020")}`;
-    yearCost2020.innerText = `Your 2021 trip cost is: $${traveler.calculateTotalSpent("2021")}`;
+    yearCost2019.innerText = `Your Total Trip Spend for 2020 is: $${traveler.calculateTotalSpent("2020")}`;
+    yearCost2020.innerText = `Your Estimated Trip Spend for 2021 is: $${traveler.calculateTotalSpent("2021")}`;
 }
 
 function createTravelerProfile(currentUserInfo, tripInfo, destinationInfo) {
