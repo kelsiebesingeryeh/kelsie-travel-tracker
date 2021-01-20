@@ -289,6 +289,7 @@ function displayPendingTrips() {
     show(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
+    hide(allTripsText);
 }
 
 function displayUpcomingTrips() {
@@ -307,6 +308,7 @@ function displayUpcomingTrips() {
     hide(pendingTripsArea);
     hide(pastTripsArea);
     hide(currentTripsArea);
+    hide(allTripsText);
 }
 
 function displayPastTrips() {
@@ -325,6 +327,7 @@ function displayPastTrips() {
     show(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
+    hide(allTripsText);
 }
 
 function displayCurrentTrips() {
@@ -343,6 +346,7 @@ function displayCurrentTrips() {
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     show(currentTripsArea);
+    hide(allTripsText);
 }
 
 function returnHome() {
@@ -354,6 +358,7 @@ function returnHome() {
     hide(pastTripsArea);
     hide(upcomingTripsArea);
     hide(currentTripsArea);
+    show(allTripsText);
 }
 
 

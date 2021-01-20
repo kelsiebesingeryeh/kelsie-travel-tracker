@@ -5,13 +5,17 @@
 
 .login-container {
     margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 500px;
+    margin-top: 2%;
 }
 
 .login-form {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+   flex-direction: column;
+   align-items: center;
+   margin: auto;
+   width: 500px;
 }
 
 .login-form-field {
@@ -29,12 +33,11 @@
     border-radius: 10px;
     color: $off-white;
     font-family: $montserrat-font;
-    margin: 5% 0;
-    padding: 5% 15%;
+    padding: 4%;
     width: 100%;
+    font-size: 2rem;
 }
 
 .message {
     text-align: center;
-    margin-top: 45%;
 }
