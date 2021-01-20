@@ -90,6 +90,7 @@ calculateTravelButton.addEventListener('click', (event) => {
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
     show(bookTravelButton);
+    show(estimatedTripCost);
     submitTripRequest();
 })
 
