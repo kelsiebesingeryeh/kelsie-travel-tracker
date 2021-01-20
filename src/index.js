@@ -180,7 +180,7 @@ function buildPage(currentUserInfo, tripInfo, destinationInfo) {
     createTravelerProfile(currentUserInfo, tripInfo, destinationInfo);
     domUpdates.displayTrips(traveler, tripsArea);
     yearCost2019.innerText = `Your Total Trip Spend for 2020 is: $${traveler.calculateTotalSpent("2020")}`;
-    yearCost2020.innerText = `Your Estimated Trip Spend for 2021 is: $${traveler.calculateTotalSpent("2021")}`;
+    yearCost2020.innerText = `Your Current Trip Spend for 2021 is: $${traveler.calculateTotalSpent("2021")}`;
 }
 
 function createTravelerProfile(currentUserInfo, tripInfo, destinationInfo) {
