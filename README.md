@@ -16,7 +16,7 @@ Kelsie Besinger-Yeh : [github profile](https://github.com/kelsiebesingeryeh)
 5. [Appreciation](#appreciation)
 
 ## Introduction
-In this project we were taked to build a travel tracking website that allowed us to pull data from an API running a local server and display information based upon a specific user chose at login. The goal of this project was for us to build a website using API to send and receive information. Please follow the setup instructions below on how to begin!
+In this project we were tasked to build a travel tracking website that allowed us to pull data from an API running a local server and displaying information based upon a specific user chosen at login. The goal of this project was for us to build a website using API data to send and receive information. Please follow the setup instructions below on how to begin!
 
 ## Setup Instructions
 #### Clone This Repo
