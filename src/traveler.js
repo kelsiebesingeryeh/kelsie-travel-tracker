@@ -9,13 +9,6 @@ class Traveler {
     this.trips = this.getAllTravelersTrips() || [];
   }
 
-  //METHODS TO THINK ABOUT
-  // - sortTrips - we need to sort them by date?
-  // validate password
-  // validate login
-  // chose a user?
-  // login guest?
-
   getAllTravelersTrips() {
     if (this.tripData.length > 0) {
       return this.tripData.reduce((total, trip) => {
@@ -36,11 +29,10 @@ class Traveler {
     let totalLodging;
     let totalFlight;
     let agentFee;
-    let totalTripCost = this.trips.reduce((total, value) => {
-      if (value.date.includes(year)) {
-        totalLodging =
-          value.destination.estimatedLodgingCostPerDay * value.duration;
-        totalFlight = value.destination.estimatedFlightCostPerPerson;
+    let totalTripCost = this.trips.reduce((total, trip) => {
+      if (trip.date.includes(year)) {
+        totalLodging = trip.destination.estimatedLodgingCostPerDay * trip.duration;
+        totalFlight = trip.destination.estimatedFlightCostPerPerson;
         total += totalLodging + totalFlight;
       }
       return total;
@@ -54,36 +46,36 @@ class Traveler {
   }
 
   getCurrentTrips() {
-    return this.trips.reduce((total, value) => {
+    return this.trips.reduce((total, trip) => {
       let today = new Date();
-      let startDate = new Date(value.date);
-      let endDate = new Date(value.date);
-      endDate.setDate(endDate.getDate() + value.duration);
+      let startDate = new Date(trip.date);
+      let endDate = new Date(trip.date);
+      endDate.setDate(endDate.getDate() + trip.duration);
       if (startDate < today && endDate > today) {
-        total.push(value);
+        total.push(trip);
       }
       return total;
     }, []);
   }
 
   getPastTrips() {
-    return this.trips.reduce((total, value) => {
+    return this.trips.reduce((total, trip) => {
       let today = new Date();
-      let endDate = new Date(value.date);
-      endDate.setDate(endDate.getDate() + value.duration);
+      let endDate = new Date(trip.date);
+      endDate.setDate(endDate.getDate() + trip.duration);
       if (endDate < today) {
-        total.push(value);
+        total.push(trip);
       }
       return total;
     }, []);
   }
 
   getUpcomingTrips() {
-    return this.trips.reduce((total, value) => {
+    return this.trips.reduce((total, trip) => {
       let today = new Date();
-      let startDate = new Date(value.date);
+      let startDate = new Date(trip.date);
       if (startDate > today) {
-        total.push(value);
+        total.push(trip);
       }
       return total;
     }, []);

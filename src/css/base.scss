@@ -45,7 +45,7 @@ h1 {
 
 .label-names {
   display: block;
-  font-size: .65rem;
+  font-size: 1rem;
   font-weight: bold;
 }
 
@@ -72,7 +72,6 @@ h1 {
   display: none;
 }
 
-
 .hidden {
   display: none;
 }
@@ -82,13 +81,16 @@ h1 {
   opacity: 0.5;
 }
 
-
 // IPAD/TABLETS
 
 @media screen and (min-width: 551px) and (max-width: 1024px) {
   .login-text {
     font-size: 2rem;
     margin-top: 21%;
+  }
+
+  .message {
+    margin-top: 65%;
   }
 
   .nav-bar {
@@ -139,6 +141,7 @@ h1 {
 
 @media screen and (max-width: 550px) {
   .login-text {
+    font-size: 2rem;
     margin-top: 35%;
   }
 

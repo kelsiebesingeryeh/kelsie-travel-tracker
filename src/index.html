@@ -40,10 +40,10 @@
               <input type="text" name="username" id="username" class="username login-form-field" placeholder="Username" required>
               <label for="password" class="label-names">Password</label>
               <input type="password" name="password" id="password-field" class="password login-form-field" placeholder="Password" required>
-              <input type="submit" value="Submit" id="login-form-submit" class="submit-button disabled" disabled>
+              <button type="submit" id="login-form-submit" class="submit-button disabled" disabled>Submit</button>
             </form>
-            <p class="message"></p>
           </div>
+          <p class="message"></p>
       </section>
       <section class="user-view hidden">
         <div class="plan-trip-area">
@@ -66,8 +66,8 @@
             <label for="travelers" class="label-names">Number of Travelers</label>
             <input type="number" name="travelers" id="travelers" class="travelers" required>
           </span>
-          <button type="submit" id="calculate-cost-submit" class="calculate-cost-button button">Calculate Trip Cost</button>
-          <button type="submit" id="book-travel-submit" class="book-travel-button hidden button">Book</button>
+          <button type="submit" id="calculate-cost-submit" class="calculate-cost-button button" aria-label="Calculate A Trip Cost">Calculate Trip Cost</button>
+          <button type="submit" id="book-travel-submit" class="book-travel-button hidden button" aria-label="Confirm Trip Booking">Book</button>
         </form>
         <h2 class="estimated-trip-cost year-text"></h2>
         <h2 class="year-cost-2019 year-text"></h2>
@@ -78,16 +78,16 @@
         </article>
       </section>
        <section class="current-trips-area card">
-        <h2 class="current-trips-text"></h2>
+        <h2 class="current-trips-text hidden">Current Trips</h2>
       </section>
       <section class="upcoming-trips-area card">
-        <h2 class="upcoming-trips-text"></h2>
+        <h2 class="upcoming-trips-text hidden">Upcoming Trips</h2>
       </section>
       <section class="pending-trips-area card">
         <h2 class="pending-trips-text"></h2>
       </section>
       <section class="past-trips-area card">
-        <h2 class="past-trips-text"></h2>
+        <h2 class="past-trips-text hidden">Past Trips</h2>
       </section>
     </main>
     <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
