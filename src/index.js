@@ -155,7 +155,6 @@ function onLoad() {
         .catch((error) => console.log(error));
 }
 
-
 function updateNewTripBookings(event) {
     event.preventDefault();
     getAllData(chosenUserID);
@@ -233,8 +232,8 @@ function submitTripRequest() {
 }
 
 function displayErrorMessage(message) {
-  const messages = document.querySelector(".message");
-  messages.innerText = message;
+    const messages = document.querySelector(".message");
+    messages.innerText = message;
 }
 
 function clearTravelInputs() {
@@ -263,7 +262,7 @@ function toggleButton(button, input) {
 }
 
 function toggleHamburgerMenuDropdown() {
-  hamburgerMenuContent.classList.toggle("hidden");
+    hamburgerMenuContent.classList.toggle("hidden");
 }
 
 function displayEstimatedCosts(event) {
@@ -271,7 +270,6 @@ function displayEstimatedCosts(event) {
     destinationInfo.forEach(destination => {
         if (destinationsList.value === destination.destination) {
             trip = new Trip(tripInfo, destination);
-            console.log('tripInfo', tripInfo)
             let durationValue = durationInput.value;
             let travelersValue = travelersInput.value;
             estimatedTripCost.innerText = `Your Estimated Trip Cost Is: $${trip.calculateEstimatedTripCost(durationValue, travelersValue)}`;
@@ -360,7 +358,3 @@ function returnHome() {
     hide(currentTripsArea);
     show(allTripsText);
 }
-
-
-// .toLocaleString() - adds commas
-// .toLocaleString("en-US", {style: "currency", currency: "USD"})

@@ -21,7 +21,6 @@ let domUpdates = {
         if (listType.length === 0) {
             pageText.innerText = `You Have No ${tripType} Trips!`
         } else {
-            pageText.innerText = `You Have No ${tripType} Trips!`;
             listArea.innerHTML = '';
             listType.forEach(trip => {
                 let listDisplay = `

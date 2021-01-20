@@ -5,9 +5,9 @@ import Traveler from '../src/traveler.js';
 import Trip from '../src/trip.js';
 
 import {
-    testUser,
-    testTrips,
-    testDestinations
+  testUser,
+  testTrips,
+  testDestinations
 } from './test-data.js'
 
 let traveler1;
@@ -33,8 +33,7 @@ describe("Traveler", () => {
   });
 
   it("Should populate an array with a travelers trips and destinations", () => {
-    expect(traveler1.trips).to.eql([
-      {
+    expect(traveler1.trips).to.eql([{
         id: 91,
         userID: 5,
         destinationID: 5,
@@ -49,8 +48,7 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 650,
           estimatedLodgingCostPerDay: 150,
           id: 5,
-          image:
-            "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+          image: "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
         },
       },
       {
@@ -68,8 +66,7 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 100,
           estimatedLodgingCostPerDay: 200,
           id: 35,
-          image:
-            "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+          image: "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
         },
       },
       {
@@ -87,8 +84,7 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 100,
           estimatedLodgingCostPerDay: 1200,
           id: 48,
-          image:
-            "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+          image: "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
         },
       },
       {
@@ -106,8 +102,7 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 988,
           estimatedLodgingCostPerDay: 35,
           id: 16,
-          image:
-            "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
+          image: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
         },
       },
     ]);
@@ -118,56 +113,49 @@ describe("Traveler", () => {
   });
 
   it("Should return all pending trips", () => {
-    expect(traveler1.getPendingTrips()).to.eql([
-      {
-        id: 196,
-        userID: 5,
-        destinationID: 16,
-        travelers: 1,
-        date: "2021/02/25",
-        duration: 8,
-        status: "pending",
-        suggestedActivities: [],
-        destination: {
-          alt: "ornate buildings with a garden during the day",
-          destination: "Bangkok, Thailand",
-          estimatedFlightCostPerPerson: 988,
-          estimatedLodgingCostPerDay: 35,
-          id: 16,
-          image:
-            "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
-        },
-      }
-    ]);
+    expect(traveler1.getPendingTrips()).to.eql([{
+      id: 196,
+      userID: 5,
+      destinationID: 16,
+      travelers: 1,
+      date: "2021/02/25",
+      duration: 8,
+      status: "pending",
+      suggestedActivities: [],
+      destination: {
+        alt: "ornate buildings with a garden during the day",
+        destination: "Bangkok, Thailand",
+        estimatedFlightCostPerPerson: 988,
+        estimatedLodgingCostPerDay: 35,
+        id: 16,
+        image: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
+      },
+    }]);
   });
 
   it("Should return all current trips", () => {
-    expect(traveler1.getCurrentTrips()).to.eql([
-      {
-        id: 103,
-        userID: 5,
-        destinationID: 35,
-        travelers: 2,
-        date: "2021/01/16",
-        duration: 20,
-        status: "approved",
-        suggestedActivities: [],
-        destination: {
-          alt: "man riding on kayak surrounded by mountains",
-          destination: "Anchorage, Alaska",
-          estimatedFlightCostPerPerson: 100,
-          estimatedLodgingCostPerDay: 200,
-          id: 35,
-          image:
-            "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-        },
+    expect(traveler1.getCurrentTrips()).to.eql([{
+      id: 103,
+      userID: 5,
+      destinationID: 35,
+      travelers: 2,
+      date: "2021/01/16",
+      duration: 20,
+      status: "approved",
+      suggestedActivities: [],
+      destination: {
+        alt: "man riding on kayak surrounded by mountains",
+        destination: "Anchorage, Alaska",
+        estimatedFlightCostPerPerson: 100,
+        estimatedLodgingCostPerDay: 200,
+        id: 35,
+        image: "https://images.unsplash.com/photo-1539545547102-90ae2c140089?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
       },
-    ]);
+    }, ]);
   });
 
   it("Should return all past trips", () => {
-    expect(traveler1.getPastTrips()).to.eql([
-      {
+    expect(traveler1.getPastTrips()).to.eql([{
         id: 91,
         userID: 5,
         destinationID: 5,
@@ -182,8 +170,7 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 650,
           estimatedLodgingCostPerDay: 150,
           id: 5,
-          image:
-            "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+          image: "https://images.unsplash.com/photo-1543785734-4b6e564642f8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
         },
       },
       {
@@ -201,34 +188,30 @@ describe("Traveler", () => {
           estimatedFlightCostPerPerson: 100,
           estimatedLodgingCostPerDay: 1200,
           id: 48,
-          image:
-            "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
+          image: "https://images.unsplash.com/photo-1568625502763-2a5ec6a94c47?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80",
         },
       },
     ]);
   });
 
-  it("Should calculate total amount spent on trips this year", () => {
-    expect(traveler1.getUpcomingTrips()).to.eql([
-      {
-        id: 196,
-        userID: 5,
-        destinationID: 16,
-        travelers: 1,
-        date: "2021/02/25",
-        duration: 8,
-        status: "pending",
-        suggestedActivities: [],
-        destination: {
-          alt: "ornate buildings with a garden during the day",
-          destination: "Bangkok, Thailand",
-          estimatedFlightCostPerPerson: 988,
-          estimatedLodgingCostPerDay: 35,
-          id: 16,
-          image:
-            "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
-        },
+  it("Should return all upcoming trips", () => {
+    expect(traveler1.getUpcomingTrips()).to.eql([{
+      id: 196,
+      userID: 5,
+      destinationID: 16,
+      travelers: 1,
+      date: "2021/02/25",
+      duration: 8,
+      status: "pending",
+      suggestedActivities: [],
+      destination: {
+        alt: "ornate buildings with a garden during the day",
+        destination: "Bangkok, Thailand",
+        estimatedFlightCostPerPerson: 988,
+        estimatedLodgingCostPerDay: 35,
+        id: 16,
+        image: "https://images.unsplash.com/photo-1563492065599-3520f775eeed?ixlib=rb-1.2.1&auto=format&fit=crop&w=1567&q=80",
       },
-    ]);
+    }, ]);
   });
 });

@@ -1,52 +1,58 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <title>Travel Tracker</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Andika&family=Hind+Vadodara&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <main>
-      <div class="hamburger hidden">
-        <div class="hamburger-content hidden">
-          <span class="dropdown-item home-mobile">Home</span>
-          <span class="dropdown-item current-trips-mobile">Current</span>
-          <span class="dropdown-item upcoming-trips-mobile">Upcoming</span>
-          <span class="dropdown-item pending-trips-mobile">Pending</span>
-          <span class="dropdown-item past-trips-mobile">Past</span>
-        </div>
+
+<head>
+  <title>Travel Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Andika&family=Hind+Vadodara&family=Montserrat:wght@400;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <div class="hamburger hidden">
+      <div class="hamburger-content hidden">
+        <span class="dropdown-item home-mobile">Home</span>
+        <span class="dropdown-item current-trips-mobile">Current</span>
+        <span class="dropdown-item upcoming-trips-mobile">Upcoming</span>
+        <span class="dropdown-item pending-trips-mobile">Pending</span>
+        <span class="dropdown-item past-trips-mobile">Past</span>
       </div>
-      <nav class="nav-bar hidden">
-        <div class="nav-left">
-          <ul>
-            <li><a class="home" href="#home">Travel Tracker</a></li>
-          </ul>
-        </div>
-        <div class="nav-right">
-          <ul>
-            <li><a href="#my-trips" class="current-trips">My Trips</a></li>
-            <li><a href="#upcoming-trips" class="upcoming-trips">Upcoming Trips</a></li>
-            <li><a href="#pending-trips" class="pending-trips">Pending Trips</a></li>
-            <li><a href="#past-trips" class="past-trips">Past Trips</a></li>
-          </ul>
-        </div>
-      </nav>
-      <section class="login-page">
-        <h1 class="login-text">Login:</h1>
-          <div class="login-container">
-            <form id="login-form" class="login-form">
-              <label for="username" class="label-names">Username</label>
-              <input type="text" name="username" id="username" class="username login-form-field" placeholder="Username" required>
-              <label for="password" class="label-names">Password</label>
-              <input type="password" name="password" id="password-field" class="password login-form-field" placeholder="Password" required>
-              <button type="submit" id="login-form-submit" class="submit-button disabled" disabled>Submit</button>
-            </form>
-          </div>
-          <p class="message"></p>
-      </section>
-      <section class="user-view hidden">
-        <div class="plan-trip-area">
+    </div>
+    <nav class="nav-bar hidden">
+      <div class="nav-left">
+        <ul>
+          <li><a class="home" href="#home">Travel Tracker</a></li>
+        </ul>
+      </div>
+      <div class="nav-right">
+        <ul>
+          <li><a href="#my-trips" class="current-trips">My Trips</a></li>
+          <li><a href="#upcoming-trips" class="upcoming-trips">Upcoming Trips</a></li>
+          <li><a href="#pending-trips" class="pending-trips">Pending Trips</a></li>
+          <li><a href="#past-trips" class="past-trips">Past Trips</a></li>
+        </ul>
+      </div>
+    </nav>
+    <section class="login-page">
+      <h1 class="login-text">Login:</h1>
+      <div class="login-container">
+        <form id="login-form" class="login-form">
+          <label for="username" class="label-names">Username</label>
+          <input type="text" name="username" id="username" class="username login-form-field" placeholder="Username"
+            required>
+          <label for="password" class="label-names">Password</label>
+          <input type="password" name="password" id="password-field" class="password login-form-field"
+            placeholder="Password" required>
+          <button type="submit" id="login-form-submit" class="submit-button disabled" disabled>Submit</button>
+        </form>
+      </div>
+      <p class="message"></p>
+    </section>
+    <section class="user-view hidden">
+      <div class="plan-trip-area">
         <h1 class="greeting"></h1>
         <h1>Plan your next trip here!</h1>
         <form class="book-trip-form">
@@ -66,30 +72,33 @@
             <label for="travelers" class="label-names">Number of Travelers</label>
             <input type="number" name="travelers" id="travelers" class="travelers" required>
           </span>
-          <button type="submit" id="calculate-cost-submit" class="calculate-cost-button button" aria-label="Calculate A Trip Cost">Calculate Trip Cost</button>
-          <button type="submit" id="book-travel-submit" class="book-travel-button hidden button" aria-label="Confirm Trip Booking">Book</button>
+          <button type="submit" id="calculate-cost-submit" class="calculate-cost-button button"
+            aria-label="Calculate A Trip Cost">Calculate Trip Cost</button>
+          <button type="submit" id="book-travel-submit" class="book-travel-button hidden button"
+            aria-label="Confirm Trip Booking">Book</button>
         </form>
         <h2 class="estimated-trip-cost year-text"></h2>
         <h2 class="year-cost-2019 year-text"></h2>
         <h2 class="year-cost-2020 year-text"></h2>
       </div>
       <h2 class="all-trips">All Trips</h2>
-        <article class="travel-card-container card">
-        </article>
-      </section>
-       <section class="current-trips-area card">
-        <h2 class="current-trips-text hidden">Current Trips</h2>
-      </section>
-      <section class="upcoming-trips-area card">
-        <h2 class="upcoming-trips-text hidden">Upcoming Trips</h2>
-      </section>
-      <section class="pending-trips-area card">
-        <h2 class="pending-trips-text"></h2>
-      </section>
-      <section class="past-trips-area card">
-        <h2 class="past-trips-text hidden">Past Trips</h2>
-      </section>
-    </main>
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
-  </body>
+      <article class="travel-card-container card">
+      </article>
+    </section>
+    <section class="current-trips-area card">
+      <h2 class="current-trips-text"></h2>
+    </section>
+    <section class="upcoming-trips-area card">
+      <h2 class="upcoming-trips-text"></h2>
+    </section>
+    <section class="pending-trips-area card">
+      <h2 class="pending-trips-text"></h2>
+    </section>
+    <section class="past-trips-area card">
+      <h2 class="past-trips-text"></h2>
+    </section>
+  </main>
+  <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+</body>
+
 </html>
