@@ -24,12 +24,12 @@ class ApiCall {
 
   postRequest(newTrip) {
     return fetch(this.url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTrip),
-    })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTrip),
+      })
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
