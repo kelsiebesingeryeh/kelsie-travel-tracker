@@ -17,20 +17,6 @@ class Trip {
     let totalTripCost = totalLodging + totalFlight;
     let agentFee = totalTripCost * 0.1;
     return (totalTripCost + agentFee);
-
-
-
-      //  let totalLodging =
-      //    this.destinationData.estimatedLodgingCostPerDay *
-      //    this.duration *
-      //    this.travelers;
-      //  console.log(totalLodging);
-      //  let totalFlight =
-      //    this.destinationData.estimatedFlightCostPerPerson * this.travelers;
-      //  let totalTripCost = totalLodging + totalFlight;
-      //  let agentFee = totalTripCost * 0.1;
-      //  return totalTripCost + agentFee;
-
   }
 }
 export default Trip;

@@ -23,8 +23,6 @@ const baseURL = 'http://localhost:3001/api/v1';
 // QUERY SELECTORS
 
 const tripsArea = document.querySelector(".travel-card-container");
-const yearCost2020 = document.querySelector(".year-cost-2020");
-const yearCost2019 = document.querySelector(".year-cost-2019");
 const allTripsText = document.querySelector(".all-trips");
 const destinationsList = document.querySelector(".destinations-list");
 const planTripArea = document.querySelector(".plan-trip-area");
@@ -81,19 +79,14 @@ passwordInput.addEventListener("keyup", () => {
     }
 });
 
-bookTripForm.addEventListener('keyUp', () => {
-    if (durationInput.value === "" && startDate.value === "" && travelersInput.value === "") {
-        loginSubmitButton.disable = true;
-    }
-} )
-
 currentTrips.addEventListener("click", displayCurrentTrips);
 upcomingTrips.addEventListener("click", displayUpcomingTrips);
 pendingTrips.addEventListener("click", displayPendingTrips);
 pastTrips.addEventListener("click", displayPastTrips);
+homeButton.addEventListener("click", returnHome);
 
 calculateTravelButton.addEventListener('click', (event) => {
-    event.preventDefault(event);
+    event.preventDefault();
     displayEstimatedCosts(event);
     hide(calculateTravelButton);
     show(bookTravelButton);
@@ -116,18 +109,13 @@ loginSubmitButton.addEventListener('click', (event) => {
     loginUser(event);
 });
 
-mobileHomeButton.addEventListener('click', returnHome)
 hamburgerMenu.addEventListener("click", toggleHamburgerMenuDropdown);
+mobileHomeButton.addEventListener("click", returnHome);
+
 mobileCurrentTripsButton.addEventListener("click", displayCurrentTrips);
 mobileUpcomingTripsButton.addEventListener("click", displayUpcomingTrips);
 mobilePendingTripsButton.addEventListener("click", displayPendingTrips);
 mobilePastTripsButton.addEventListener("click", displayPastTrips);
-
-function toggleHamburgerMenuDropdown() {
-    hamburgerMenuContent.classList.toggle('hidden');
-}
-
-homeButton.addEventListener("click", returnHome);
 
 function loginUser(event) {
     event.preventDefault();
@@ -140,11 +128,6 @@ function loginUser(event) {
         hide(navbar);
         displayErrorMessage('You have entered the wrong username or password!');
     }
-}
-
-function displayErrorMessage(message) {
-    const messages = document.querySelector('.message');
-    messages.innerText = message
 }
 
 function getAllData() {
@@ -179,7 +162,6 @@ function updateNewTripBookings(event) {
 }
 
 function fillDropdown() {
-
     let sortedDestinations = destinationInfo.sort((a, b) => {
         if (a.destination < b.destination) {
             return -1
@@ -192,14 +174,9 @@ function fillDropdown() {
     });
 }
 
-function clearTravelInputs() {
-    durationInput.value = "";
-    travelersInput.value = "";
-    startDate.value = "";
-    destinationsList.selectedIndex = 0;
-}
-
 function buildPage(currentUserInfo, tripInfo, destinationInfo) {
+    const yearCost2020 = document.querySelector(".year-cost-2020");
+    const yearCost2019 = document.querySelector(".year-cost-2019");
     createTravelerProfile(currentUserInfo, tripInfo, destinationInfo);
     domUpdates.displayTrips(traveler, tripsArea);
     yearCost2019.innerText = `Your 2019 trip cost is: $${traveler.calculateTotalSpent("2019")}`;
@@ -255,12 +232,38 @@ function submitTripRequest() {
     newTripBooking.postRequest(postOption);
 }
 
+function displayErrorMessage(message) {
+  const messages = document.querySelector(".message");
+  messages.innerText = message;
+}
+
+function clearTravelInputs() {
+    durationInput.value = "";
+    travelersInput.value = "";
+    startDate.value = "";
+    destinationsList.selectedIndex = 0;
+}
+
 function show(element) {
     element.classList.remove("hidden");
 }
 
 function hide(element) {
     element.classList.add("hidden");
+}
+
+function toggleButton(button, input) {
+    if (input.value === '') {
+        button.disabled = true;
+        button.classList.add('disabled');
+    } else {
+        button.disabled = false;
+        button.classList.remove('disabled');
+    }
+}
+
+function toggleHamburgerMenuDropdown() {
+  hamburgerMenuContent.classList.toggle("hidden");
 }
 
 function displayEstimatedCosts(event) {
@@ -353,16 +356,6 @@ function returnHome() {
     hide(currentTripsArea);
 }
 
-function toggleButton(button, input) {
-    if (input.value === '') {
-        button.disabled = true;
-        button.classList.add('disabled');
-    } else {
-        button.disabled = false;
-        button.classList.remove('disabled');
-    }
-}
 
 // .toLocaleString() - adds commas
 // .toLocaleString("en-US", {style: "currency", currency: "USD"})
-
