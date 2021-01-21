@@ -7,11 +7,13 @@ let domUpdates = {
                     <div class="image-styling">
                     <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
                     </div>
-                    <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
-                    <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
-                    <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
-                    <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
-                    <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+                    <div class="info-card-styling">
+                        <p id="${trip.destination.destination}-destination" class="trip-destination">${trip.destination.destination}</p>
+                        <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
+                        <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
+                        <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
+                        <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+                    </div>
                     </div>`;
             tripsArea.insertAdjacentHTML('beforeend', tripsHTML)
         })
@@ -28,11 +30,13 @@ let domUpdates = {
                <div class="image-styling">
                    <img src="${trip.destination.image}" alt="${trip.destination.alt}" class="trip-image">
                </div>
-               <p id="${trip.destination.destination}-destination" class="trip-date">Destination: ${trip.destination.destination}</p>
-               <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
-               <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
-               <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
-               <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+               <div class="info-card-styling">
+                <p id="${trip.destination.destination}-destination" class="trip-destination">${trip.destination.destination}</p>
+                <p id="${trip.date}-date" class="trip-date">Trip Date: ${trip.date}</p>
+                <p id="${trip.duration}-duration" class="trip-duration">Trip Duration: ${trip.duration}</p>
+                <p id="${trip.travelers}-travelers" class="trip-travelers">Number of Travelers: ${trip.travelers}</p>
+                <p id="${trip.status}-status" class="trip-status">Trip Status: ${trip.status}</p>
+               </div>
            </div>`;
                 listArea.insertAdjacentHTML('beforeend', listDisplay)
             })

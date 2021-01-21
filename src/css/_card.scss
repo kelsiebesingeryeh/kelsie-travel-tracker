@@ -8,29 +8,34 @@
 }
 
 .info-card {
-    align-items: center;
     border: 1px solid $slate-grey;
     border-radius: 5px;
     box-shadow: $shadow;
     @include flexDisplay(flex, column);
-    justify-content: center;
-    text-align: center;
     width: 70%;
 }
 
 .image-styling {
-    display: flex;
-    flex-direction: column;
+    @include flexDisplay(flex, column);
     height: 100%;
 }
 
 .trip-image {
-    height: auto;
-    margin-bottom: 25%;
+    height: 100%;
     width: 100%;
 }
 
+.trip-destination {
+    font-weight: bold;
+}
+
+.info-card-styling {
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+}
+
 p {
-    margin: 0;
+    margin: 2%;
     padding: 0;
 }
