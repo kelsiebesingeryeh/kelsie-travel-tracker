@@ -3,6 +3,7 @@
 #### Project Manager: David Whitaker
 
 The details of this project are outlined in [this project spec](https://frontend.turing.io/projects/travel-tracker.html)
+
 Code Architecture Planning Document can be found [here](https://docs.google.com/spreadsheets/d/1veL90I7KjxXcDPXHX18zanbqQTjP_yPO6gZqql8uEV4/edit#gid=0)
 
 ### Contributors
