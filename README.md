@@ -3,6 +3,7 @@
 #### Project Manager: David Whitaker
 
 The details of this project are outlined in [this project spec](https://frontend.turing.io/projects/travel-tracker.html)
+Code Architecture Planning Document can be found [here](https://docs.google.com/spreadsheets/d/1veL90I7KjxXcDPXHX18zanbqQTjP_yPO6gZqql8uEV4/edit#gid=0)
 
 ### Contributors
 Kelsie Besinger-Yeh : [github profile](https://github.com/kelsiebesingeryeh)
@@ -16,9 +17,9 @@ Kelsie Besinger-Yeh : [github profile](https://github.com/kelsiebesingeryeh)
 5. [Appreciation](#appreciation)
 
 ## Introduction
-In this project we were tasked to build a travel tracking website that allowed us to pull data from an API running a local server and displaying information based upon a specific user chosen at login. The goal of this project was for us to build a website using API data to send and receive information. Please follow the setup instructions below on how to begin!
+In this project we were tasked to build a travel tracking website that allowed us to pull data from an API running a local server to display information based upon a specific user chosen at login. The goal of this project was for us to build a website using API data to send and receive information. Please follow the setup instructions below on how to begin!
 
-## Setup Instructions
+## Setup Instructions for Webpack
 #### Clone This Repo
 That's right, clone not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
 
@@ -49,7 +50,7 @@ Project is running at http://localhost:8080/
 Go to http://localhost:8080/ in your browser to view your code running in the browser.
 
 ### Testing
-We have created a series of tests for our data model. If you would like to run a few of these tests (or add new features), choose a test file and run npm test test/[selected test file] in your terminal. You will see that we have provided a set test data file to make testing much smoother and easier to read.
+I have created a series of tests for our data model. If you would like to run a few of these tests (or add new features), choose a test file and run npm test test/[selected test file] in your terminal. You will see that we have provided a set test data file to make testing much smoother and easier to read.
 
 Back to Top of Page
 
