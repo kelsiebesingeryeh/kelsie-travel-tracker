@@ -18,7 +18,7 @@ let currentTraveler;
 let newTrip;
 let trip;
 let chosenUserID;
-const baseURL = 'http://localhost:3001/api/v1';
+const baseURL = "https://travel-tracker-api.herokuapp.com/api/v1";
 
 // QUERY SELECTORS
 
@@ -227,7 +227,7 @@ function getNewID() {
 function submitTripRequest() {
     let postOption = makeNewTrip();
     let newTripBooking = new ApiCall(
-        "http://localhost:3001/api/v1/trips"
+      "https://travel-tracker-api.herokuapp.com/api/v1/trips"
     );
     newTripBooking.postRequest(postOption);
 }
